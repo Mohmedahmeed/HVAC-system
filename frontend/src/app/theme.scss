@@ -1,0 +1,132 @@
+@use '@angular/material' as mat;
+
+// ─── Choufli Hal Brand Palettes ──────────────────────────────
+
+// Primary: Deep Blue (#1E40AF)
+$chofli-primary: mat.define-palette(
+  (
+    50: #EFF6FF,
+    100: #DBEAFE,
+    200: #BFDBFE,
+    300: #93C5FD,
+    400: #60A5FA,
+    500: #3B82F6,
+    600: #2563EB,
+    700: #1E40AF,
+    800: #1E3A8A,
+    900: #1E3A5F,
+    A100: #5271FF,
+    A200: #1E40AF,
+    A400: #1A33CC,
+    A700: #1E3A8A,
+    contrast: (
+      50: rgba(0, 0, 0, 0.87),
+      100: rgba(0, 0, 0, 0.87),
+      200: rgba(0, 0, 0, 0.87),
+      300: rgba(0, 0, 0, 0.87),
+      400: #ffffff,
+      500: #ffffff,
+      600: #ffffff,
+      700: #ffffff,
+      800: #ffffff,
+      900: #ffffff,
+      A100: rgba(0, 0, 0, 0.87),
+      A200: #ffffff,
+      A400: #ffffff,
+      A700: #ffffff,
+    )
+  )
+);
+
+// Accent: Amber (#F59E0B)
+$chofli-accent: mat.define-palette(
+  (
+    50: #FFFBEB,
+    100: #FEF3C7,
+    200: #FDE68A,
+    300: #FCD34D,
+    400: #FBBF24,
+    500: #F59E0B,
+    600: #D97706,
+    700: #B45309,
+    800: #92400E,
+    900: #78350F,
+    A100: #FDE047,
+    A200: #FCD34D,
+    A400: #F59E0B,
+    A700: #D97706,
+    contrast: (
+      50: rgba(0, 0, 0, 0.87),
+      100: rgba(0, 0, 0, 0.87),
+      200: rgba(0, 0, 0, 0.87),
+      300: rgba(0, 0, 0, 0.87),
+      400: rgba(0, 0, 0, 0.87),
+      500: rgba(0, 0, 0, 0.87),
+      600: rgba(0, 0, 0, 0.87),
+      700: #ffffff,
+      800: #ffffff,
+      900: #ffffff,
+      A100: rgba(0, 0, 0, 0.87),
+      A200: rgba(0, 0, 0, 0.87),
+      A400: rgba(0, 0, 0, 0.87),
+      A700: #ffffff,
+    )
+  )
+);
+
+// Warn: Red (#DC2626)
+$chofli-warn: mat.define-palette(
+  (
+    50: #FEF2F2,
+    100: #FEE2E2,
+    200: #FECACA,
+    300: #FCA5A5,
+    400: #F87171,
+    500: #EF4444,
+    600: #DC2626,
+    700: #B91C1C,
+    800: #991B1B,
+    900: #7F1D1D,
+    A100: #FF6659,
+    A200: #FF5252,
+    A400: #FF1744,
+    A700: #D50000,
+    contrast: (
+      50: rgba(0, 0, 0, 0.87),
+      100: rgba(0, 0, 0, 0.87),
+      200: rgba(0, 0, 0, 0.87),
+      300: rgba(0, 0, 0, 0.87),
+      400: rgba(0, 0, 0, 0.87),
+      500: #ffffff,
+      600: #ffffff,
+      700: #ffffff,
+      800: #ffffff,
+      900: #ffffff,
+      A100: rgba(0, 0, 0, 0.87),
+      A200: #ffffff,
+      A400: #ffffff,
+      A700: #ffffff,
+    )
+  )
+);
+
+// ─── Typography ──────────────────────────────────────────────
+
+$chofli-typography: mat.define-typography-config(
+  $font-family: '"Inter", "Roboto", "Helvetica Neue", sans-serif',
+);
+
+// ─── Theme Definition ────────────────────────────────────────
+
+$chofli-theme: mat.define-light-theme((
+  color: (
+    primary: $chofli-primary,
+    accent: $chofli-accent,
+    warn: $chofli-warn,
+  ),
+  typography: $chofli-typography,
+));
+
+// ─── Apply Theme ─────────────────────────────────────────────
+
+@include mat.all-component-themes($chofli-theme);

@@ -1,0 +1,12 @@
+<div class="ch-empty-state">
+  <mat-icon class="ch-empty-state__icon" aria-hidden="true">{{ icon }}</mat-icon>
+  <p class="ch-empty-state__message">{{ message }}</p>
+  <button
+    *ngIf="actionText"
+    mat-stroked-button
+    color="primary"
+    class="ch-empty-state__action"
+    (click)="onAction()">
+    {{ actionText }}
+  </button>
+</div>

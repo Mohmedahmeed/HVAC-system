@@ -1,0 +1,93 @@
+.ch-skeleton {
+  width: 100%;
+}
+
+/* ── Base line ────────────────────────────────────────────── */
+
+.ch-skeleton__line {
+  height: 14px;
+  background: var(--ch-border);
+  border-radius: var(--ch-radius-sm);
+  animation: ch-shimmer 1.5s ease-in-out infinite;
+}
+
+.ch-skeleton__line--title {
+  width: 60%;
+  height: 18px;
+  margin-bottom: var(--ch-space-3);
+}
+
+.ch-skeleton__line--subtitle {
+  width: 40%;
+  height: 12px;
+}
+
+.ch-skeleton__line--body {
+  width: 100%;
+  margin-bottom: var(--ch-space-2);
+}
+
+.ch-skeleton__line--short {
+  width: 75%;
+}
+
+/* ── Card variant ─────────────────────────────────────────── */
+
+.ch-skeleton--card {
+  padding: var(--ch-space-6);
+  background: var(--ch-surface);
+  border-radius: var(--ch-radius-lg);
+  box-shadow: var(--ch-shadow);
+}
+
+/* ── Text variant ─────────────────────────────────────────── */
+
+.ch-skeleton--text {
+  padding: var(--ch-space-4) 0;
+}
+
+/* ── List variant ─────────────────────────────────────────── */
+
+.ch-skeleton__row {
+  display: flex;
+  align-items: center;
+  gap: var(--ch-space-3);
+  padding: var(--ch-space-3) 0;
+}
+
+.ch-skeleton__avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--ch-border);
+  flex-shrink: 0;
+  animation: ch-shimmer 1.5s ease-in-out infinite;
+}
+
+.ch-skeleton__avatar--lg {
+  width: 72px;
+  height: 72px;
+}
+
+.ch-skeleton__row-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--ch-space-2);
+}
+
+/* ── Avatar variant ───────────────────────────────────────── */
+
+.ch-skeleton--avatar {
+  display: flex;
+  justify-content: center;
+  padding: var(--ch-space-6) 0;
+}
+
+/* ── Shimmer animation ────────────────────────────────────── */
+
+@keyframes ch-shimmer {
+  0% { opacity: 1; }
+  50% { opacity: 0.4; }
+  100% { opacity: 1; }
+}

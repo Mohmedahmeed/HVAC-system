@@ -1,0 +1,78 @@
+<mat-toolbar class="ch-topbar">
+  <div class="ch-topbar__left">
+    <!-- Sidebar toggle for contractor/admin -->
+    <button
+      *ngIf="layout !== 'customer'"
+      mat-icon-button
+      class="ch-topbar__toggle"
+      (click)="onToggleSidebar()"
+      [attr.aria-label]="sidebarOpen ? 'Close sidebar' : 'Open sidebar'"
+      aria-label="Toggle sidebar"
+    >
+      <mat-icon>{{ sidebarOpen ? 'menu_open' : 'menu' }}</mat-icon>
+    </button>
+
+    <!-- Logo -->
+    <a class="ch-topbar__logo" routerLink="/home" aria-label="Choufli Hal home">
+      <img src="assets/images/logo choufli hal.png" alt="Choufli Hal" />
+    </a>
+
+    <!-- Customer nav links (inline in top bar) -->
+    <nav
+      *ngIf="layout === 'customer'"
+      class="ch-topbar__nav"
+      aria-label="Customer navigation"
+    >
+      <ng-container *ngFor="let link of customerNavLinks">
+        <a
+          *ngIf="!link.disabled"
+          class="ch-topbar__nav-link"
+          [routerLink]="link.route"
+          routerLinkActive="ch-topbar__nav-link--active"
+        >
+          <mat-icon class="ch-topbar__nav-icon">{{ link.icon }}</mat-icon>
+          <span class="ch-topbar__nav-text">{{ link.label }}</span>
+        </a>
+        <span
+          *ngIf="link.disabled"
+          class="ch-topbar__nav-link ch-topbar__nav-link--disabled"
+          [attr.title]="link.label + ' (coming soon)'"
+        >
+          <mat-icon class="ch-topbar__nav-icon">{{ link.icon }}</mat-icon>
+          <span class="ch-topbar__nav-text">{{ link.label }}</span>
+          <span class="ch-topbar__nav-badge">Soon</span>
+        </span>
+      </ng-container>
+    </nav>
+  </div>
+
+  <div class="ch-topbar__right">
+    <!-- User menu -->
+    <button
+      mat-button
+      [matMenuTriggerFor]="userMenu"
+      class="ch-topbar__user-btn"
+      aria-label="User menu"
+      aria-haspopup="menu"
+    >
+      <div class="ch-topbar__avatar">{{ userInitials }}</div>
+      <div class="ch-topbar__user-info">
+        <span class="ch-topbar__user-name">{{ displayName }}</span>
+        <span class="ch-topbar__user-role">{{ roleLabel }}</span>
+      </div>
+      <mat-icon class="ch-topbar__chevron">expand_more</mat-icon>
+    </button>
+
+    <mat-menu #userMenu="matMenu" class="ch-topbar__menu">
+      <button mat-menu-item disabled>
+        <mat-icon>person</mat-icon>
+        <span>Profile (coming soon)</span>
+      </button>
+      <mat-divider></mat-divider>
+      <button mat-menu-item (click)="onLogout()" class="ch-topbar__logout-btn">
+        <mat-icon>exit_to_app</mat-icon>
+        <span>Log out</span>
+      </button>
+    </mat-menu>
+  </div>
+</mat-toolbar>

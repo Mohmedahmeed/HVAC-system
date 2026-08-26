@@ -1,0 +1,181 @@
+/* ═══════════════════════════════════════════════════════════════
+   TopBar — Shared authenticated navigation bar
+   ═══════════════════════════════════════════════════════════════ */
+
+.ch-topbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  height: 64px;
+  background: var(--ch-surface);
+  border-bottom: 1px solid var(--ch-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--ch-space-4);
+  box-shadow: var(--ch-shadow-sm);
+}
+
+/* ─── Left Section ──────────────────────────────────────────── */
+
+.ch-topbar__left {
+  display: flex;
+  align-items: center;
+  gap: var(--ch-space-3);
+}
+
+.ch-topbar__toggle {
+  color: var(--ch-text-secondary);
+}
+
+.ch-topbar__logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.ch-topbar__logo img {
+  height: 40px;
+  width: auto;
+}
+
+/* ─── Customer Nav Links ────────────────────────────────────── */
+
+.ch-topbar__nav {
+  display: flex;
+  align-items: center;
+  gap: var(--ch-space-1);
+  margin-left: var(--ch-space-4);
+}
+
+.ch-topbar__nav-link {
+  display: flex;
+  align-items: center;
+  gap: var(--ch-space-2);
+  padding: var(--ch-space-2) var(--ch-space-3);
+  border-radius: var(--ch-radius);
+  color: var(--ch-text-secondary);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.ch-topbar__nav-link:hover {
+  background: var(--ch-primary-light);
+  color: var(--ch-primary);
+}
+
+.ch-topbar__nav-link--active {
+  background: var(--ch-primary-light);
+  color: var(--ch-primary);
+  font-weight: 600;
+}
+
+.ch-topbar__nav-link--disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+.ch-topbar__nav-badge {
+  font-size: 10px;
+  background: var(--ch-accent);
+  color: var(--ch-text);
+  padding: 2px 6px;
+  border-radius: var(--ch-radius-full);
+  font-weight: 600;
+  margin-left: var(--ch-space-2);
+}
+
+.ch-topbar__nav-icon {
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+}
+
+/* ─── Right Section ─────────────────────────────────────────── */
+
+.ch-topbar__right {
+  display: flex;
+  align-items: center;
+}
+
+.ch-topbar__user-btn {
+  display: flex;
+  align-items: center;
+  gap: var(--ch-space-2);
+  padding: var(--ch-space-1) var(--ch-space-2);
+  border-radius: var(--ch-radius);
+  text-transform: none;
+  font-weight: 400;
+  min-height: 40px;
+}
+
+.ch-topbar__avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--ch-radius-full);
+  background: var(--ch-primary);
+  color: var(--ch-text-inverse);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.ch-topbar__user-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  line-height: 1.2;
+}
+
+.ch-topbar__user-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ch-text);
+}
+
+.ch-topbar__user-role {
+  font-size: 12px;
+  color: var(--ch-text-muted);
+}
+
+.ch-topbar__chevron {
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+  color: var(--ch-text-muted);
+}
+
+/* ─── Logout Button ─────────────────────────────────────────── */
+
+.ch-topbar__logout-btn {
+  color: var(--ch-error);
+}
+
+/* ─── Responsive ────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+  .ch-topbar__nav {
+    display: none;
+  }
+
+  .ch-topbar__user-info {
+    display: none;
+  }
+
+  .ch-topbar__chevron {
+    display: none;
+  }
+
+  .ch-topbar {
+    padding: 0 var(--ch-space-3);
+  }
+}

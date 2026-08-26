@@ -1,0 +1,54 @@
+package com.example.projet.controller;
+
+import com.example.projet.entity.Annonce;
+import com.example.projet.service.AnnonceService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/annonce")
+public class AnnonceController {
+    private AnnonceService annonceService;
+
+    @Autowired
+    public AnnonceController(AnnonceService annonceService) {
+        this.annonceService = annonceService;
+    }
+
+    @PostMapping
+    public ResponseEntity<Annonce> createAnnonce(@RequestBody Annonce annonce){
+        Annonce savedAnnonce = annonceService.createAnnonce(annonce);
+        return new ResponseEntity<>(savedAnnonce,HttpStatus.OK);
+    }
+
+    @GetMapping("{categorie}/{lieu}")
+    public ResponseEntity<List<Annonce>> Recherche(@PathVariable("categorie") String categorie, @PathVariable("lieu") String lieu){
+        List<Annonce> annonce =annonceService.Recherche(categorie, lieu);
+        if(annonce!=null)
+            return new ResponseEntity<>(annonce, HttpStatus.OK);
+        else
+            return new ResponseEntity<>(null, HttpStatus.OK);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Annonce>> getAllAnnonce(){
+        List<Annonce> annonces = annonceService.getAllAnnonces();
+        return new ResponseEntity<>(annonces, HttpStatus.OK);
+    }
+
+    @PutMapping("{id}")
+    public ResponseEntity<Annonce> updateAnnonce(@PathVariable("id") Long annonceId, @RequestBody Annonce annonce){
+        Annonce updatedAnnonce = annonceService.updateAnnonce(annonceId,annonce);
+        return new ResponseEntity<>(updatedAnnonce, HttpStatus.OK);
+    }
+
+    @DeleteMapping("{id}")
+    public String deleteAnnonce(@PathVariable("id") Long annonceId){
+        annonceService.deleteAnnonce(annonceId);
+        return "Deleted Successfully";
+    }
+}

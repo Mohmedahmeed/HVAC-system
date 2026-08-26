@@ -1,0 +1,130 @@
+<mat-sidenav-container class="ch-layout">
+  <!-- Mobile overlay sidenav -->
+  <mat-sidenav
+    *ngIf="isMobile"
+    #sidenav
+    mode="over"
+    [opened]="false"
+    (closed)="onSidenavClosed()"
+    class="ch-layout__sidenav ch-layout__sidenav--mobile"
+    aria-label="Contractor navigation"
+  >
+    <div class="ch-layout__sidenav-header">
+      <a routerLink="/home" class="ch-layout__sidenav-logo" aria-label="Home">
+        <img src="assets/images/logo choufli hal.png" alt="Choufli Hal" />
+      </a>
+    </div>
+    <nav class="ch-layout__sidenav-nav" aria-label="Contractor navigation">
+      <ng-container *ngFor="let item of navItems">
+        <a
+          *ngIf="!item.disabled"
+          class="ch-layout__sidenav-link"
+          [routerLink]="item.route"
+          routerLinkActive="ch-layout__sidenav-link--active"
+          (click)="sidenav.close()"
+        >
+          <mat-icon>{{ item.icon }}</mat-icon>
+          <span>{{ item.label }}</span>
+        </a>
+        <span
+          *ngIf="item.disabled"
+          class="ch-layout__sidenav-link ch-layout__sidenav-link--disabled"
+        >
+          <mat-icon>{{ item.icon }}</mat-icon>
+          <span>{{ item.label }}</span>
+          <span class="ch-layout__sidenav-badge">Soon</span>
+        </span>
+      </ng-container>
+
+      <mat-divider class="ch-layout__sidenav-divider"></mat-divider>
+
+      <span class="ch-layout__sidenav-section-title">Settings</span>
+      <ng-container *ngFor="let item of settingsItems">
+        <a
+          *ngIf="!item.disabled"
+          class="ch-layout__sidenav-link"
+          [routerLink]="item.route"
+          routerLinkActive="ch-layout__sidenav-link--active"
+          (click)="sidenav.close()"
+        >
+          <mat-icon>{{ item.icon }}</mat-icon>
+          <span>{{ item.label }}</span>
+        </a>
+        <span
+          *ngIf="item.disabled"
+          class="ch-layout__sidenav-link ch-layout__sidenav-link--disabled"
+        >
+          <mat-icon>{{ item.icon }}</mat-icon>
+          <span>{{ item.label }}</span>
+          <span class="ch-layout__sidenav-badge">Soon</span>
+        </span>
+      </ng-container>
+    </nav>
+  </mat-sidenav>
+
+  <!-- Desktop persistent sidebar -->
+  <mat-sidenav
+    *ngIf="!isMobile"
+    mode="side"
+    [opened]="sidebarOpen"
+    class="ch-layout__sidenav ch-layout__sidenav--desktop"
+    aria-label="Contractor navigation"
+  >
+    <nav class="ch-layout__sidenav-nav" aria-label="Contractor navigation">
+      <ng-container *ngFor="let item of navItems">
+        <a
+          *ngIf="!item.disabled"
+          class="ch-layout__sidenav-link"
+          [routerLink]="item.route"
+          routerLinkActive="ch-layout__sidenav-link--active"
+        >
+          <mat-icon>{{ item.icon }}</mat-icon>
+          <span class="ch-layout__sidenav-label">{{ item.label }}</span>
+        </a>
+        <span
+          *ngIf="item.disabled"
+          class="ch-layout__sidenav-link ch-layout__sidenav-link--disabled"
+        >
+          <mat-icon>{{ item.icon }}</mat-icon>
+          <span class="ch-layout__sidenav-label">{{ item.label }}</span>
+          <span class="ch-layout__sidenav-badge">Soon</span>
+        </span>
+      </ng-container>
+
+      <mat-divider class="ch-layout__sidenav-divider"></mat-divider>
+
+      <span class="ch-layout__sidenav-section-title">Settings</span>
+      <ng-container *ngFor="let item of settingsItems">
+        <a
+          *ngIf="!item.disabled"
+          class="ch-layout__sidenav-link"
+          [routerLink]="item.route"
+          routerLinkActive="ch-layout__sidenav-link--active"
+        >
+          <mat-icon>{{ item.icon }}</mat-icon>
+          <span class="ch-layout__sidenav-label">{{ item.label }}</span>
+        </a>
+        <span
+          *ngIf="item.disabled"
+          class="ch-layout__sidenav-link ch-layout__sidenav-link--disabled"
+        >
+          <mat-icon>{{ item.icon }}</mat-icon>
+          <span class="ch-layout__sidenav-label">{{ item.label }}</span>
+          <span class="ch-layout__sidenav-badge">Soon</span>
+        </span>
+      </ng-container>
+    </nav>
+  </mat-sidenav>
+
+  <!-- Main content area -->
+  <mat-sidenav-content class="ch-layout__main">
+    <app-top-bar
+      layout="contractor"
+      [sidebarOpen]="sidebarOpen"
+      (toggleSidebar)="onToggleSidebar()"
+    ></app-top-bar>
+    <div class="ch-layout__content">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

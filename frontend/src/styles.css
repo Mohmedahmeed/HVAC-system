@@ -1,0 +1,132 @@
+/* ═══════════════════════════════════════════════════════════════
+   Choufli Hal — Global Design Tokens
+   ═══════════════════════════════════════════════════════════════ */
+
+:root {
+  /* ── Brand Colors ─────────────────────────────────────────── */
+  --ch-primary: #1E40AF;
+  --ch-primary-dark: #1E3A8A;
+  --ch-primary-light: #DBEAFE;
+  --ch-accent: #F59E0B;
+  --ch-accent-light: #FEF3C7;
+
+  /* ── Semantic Colors ──────────────────────────────────────── */
+  --ch-success: #059669;
+  --ch-success-light: #D1FAE5;
+  --ch-success-text: #065F46;
+  --ch-warning: #D97706;
+  --ch-warning-light: #FEF3C7;
+  --ch-warning-text: #92400E;
+  --ch-error: #DC2626;
+  --ch-error-light: #FEE2E2;
+  --ch-error-text: #991B1B;
+  --ch-info: #1E40AF;
+  --ch-info-light: #DBEAFE;
+  --ch-matched-bg: #EDE9FE;
+  --ch-matched-text: #7C3AED;
+  --ch-in-progress-bg: #FEF3C7;
+  --ch-in-progress-text: #B45309;
+
+  /* ── Text ─────────────────────────────────────────────────── */
+  --ch-text: #1E293B;
+  --ch-text-secondary: #64748B;
+  --ch-text-muted: #94A3B8;
+  --ch-text-inverse: #FFFFFF;
+
+  /* ── Surfaces ─────────────────────────────────────────────── */
+  --ch-bg: #F8FAFC;
+  --ch-surface: #FFFFFF;
+  --ch-border: #E2E8F0;
+  --ch-divider: #F1F5F9;
+
+  /* ── Border Radius ────────────────────────────────────────── */
+  --ch-radius-sm: 6px;
+  --ch-radius: 8px;
+  --ch-radius-lg: 12px;
+  --ch-radius-xl: 16px;
+  --ch-radius-full: 9999px;
+
+  /* ── Shadows ──────────────────────────────────────────────── */
+  --ch-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --ch-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+  --ch-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --ch-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+
+  /* ── Spacing Scale ────────────────────────────────────────── */
+  --ch-space-1: 4px;
+  --ch-space-2: 8px;
+  --ch-space-3: 12px;
+  --ch-space-4: 16px;
+  --ch-space-5: 20px;
+  --ch-space-6: 24px;
+  --ch-space-8: 32px;
+  --ch-space-10: 40px;
+  --ch-space-12: 48px;
+  --ch-space-16: 64px;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   Global Reset
+   ═══════════════════════════════════════════════════════════════ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', 'Roboto', 'Helvetica Neue', sans-serif;
+  background: var(--ch-bg);
+  color: var(--ch-text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   Utility Classes — minimal, only genuinely reusable
+   ═══════════════════════════════════════════════════════════════ */
+
+.ch-container {
+  width: 100%;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--ch-space-4);
+  padding-right: var(--ch-space-4);
+}
+
+.ch-card {
+  background: var(--ch-surface);
+  border-radius: var(--ch-radius-lg);
+  box-shadow: var(--ch-shadow);
+  padding: var(--ch-space-6);
+}
+
+.ch-page-header {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--ch-text);
+  margin: 0 0 var(--ch-space-6) 0;
+  line-height: 1.3;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   Reduced Motion
+   ═══════════════════════════════════════════════════════════════ */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

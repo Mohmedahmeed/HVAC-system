@@ -1,0 +1,257 @@
+/* ═══════════════════════════════════════════════════════════════
+   Contractor Register Page — Two-Column Layout
+   ═══════════════════════════════════════════════════════════════ */
+
+.register-page {
+  display: flex;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+/* ── Brand Side (Left) ──────────────────────────────────────── */
+
+.register-brand {
+  flex: 1 1 40%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--ch-primary-dark);
+  color: var(--ch-text-inverse);
+  padding: var(--ch-space-10);
+  position: relative;
+  overflow: hidden;
+}
+
+.register-brand::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 30% 70%, rgba(255 255 255 / 0.06) 0%, transparent 50%),
+    radial-gradient(circle at 70% 30%, rgba(255 255 255 / 0.04) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.register-brand__content {
+  max-width: 360px;
+  position: relative;
+  z-index: 1;
+}
+
+.register-brand__logo-img {
+  height: 44px;
+  width: auto;
+  margin-bottom: var(--ch-space-6);
+  display: block;
+}
+
+.register-brand__title {
+  font-size: 30px;
+  font-weight: 700;
+  margin: 0 0 var(--ch-space-2) 0;
+  letter-spacing: -0.02em;
+}
+
+.register-brand__tagline {
+  font-size: 17px;
+  font-weight: 500;
+  margin: 0 0 var(--ch-space-3) 0;
+  opacity: 0.9;
+}
+
+.register-brand__subtitle {
+  font-size: 14px;
+  line-height: 1.6;
+  margin: 0 0 var(--ch-space-8) 0;
+  opacity: 0.8;
+}
+
+.register-brand__features {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--ch-space-3);
+}
+
+.register-brand__features li {
+  display: flex;
+  align-items: center;
+  gap: var(--ch-space-2);
+  font-size: 14px;
+  font-weight: 500;
+  opacity: 0.9;
+}
+
+.register-brand__features mat-icon {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+  color: var(--ch-accent);
+}
+
+/* ── Form Side (Right) ──────────────────────────────────────── */
+
+.register-form-side {
+  flex: 1 1 60%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--ch-space-10) var(--ch-space-12);
+  background: var(--ch-bg);
+}
+
+.register-form-card {
+  width: 100%;
+  max-width: 480px;
+}
+
+.register-form-card__heading {
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--ch-text);
+  margin: 0 0 var(--ch-space-1) 0;
+  letter-spacing: -0.01em;
+}
+
+.register-form-card__subtext {
+  font-size: 14px;
+  color: var(--ch-text-secondary);
+  margin: 0 0 var(--ch-space-6) 0;
+}
+
+/* ── Form ───────────────────────────────────────────────────── */
+
+.register-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ch-space-1);
+}
+
+.register-form__row {
+  display: flex;
+  gap: var(--ch-space-3);
+}
+
+.register-form__field {
+  flex: 1;
+}
+
+.register-form__field--full {
+  width: 100%;
+}
+
+.register-form__toggle-pw {
+  cursor: pointer;
+}
+
+.register-form__submit {
+  width: 100%;
+  height: 48px;
+  font-size: 15px;
+  font-weight: 600;
+  margin-top: var(--ch-space-2);
+  border-radius: var(--ch-radius);
+}
+
+.register-form__spinner {
+  display: inline-block;
+  margin-right: var(--ch-space-2);
+}
+
+/* ── Footer / Links ─────────────────────────────────────────── */
+
+.register-form-card__footer {
+  margin-top: var(--ch-space-6);
+  text-align: center;
+}
+
+.register-form-card__login,
+.register-form-card__customer {
+  font-size: 14px;
+  color: var(--ch-text-secondary);
+  margin: 0 0 var(--ch-space-2) 0;
+}
+
+.register-form-card__link {
+  font-weight: 500;
+  color: var(--ch-primary);
+  text-decoration: none;
+}
+
+.register-form-card__link:hover {
+  text-decoration: underline;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   Responsive — Tablet
+   ═══════════════════════════════════════════════════════════════ */
+
+@media (max-width: 1024px) {
+  .register-brand {
+    flex: 1 1 35%;
+    padding: var(--ch-space-8);
+  }
+
+  .register-form-side {
+    flex: 1 1 65%;
+    padding: var(--ch-space-8);
+  }
+
+  .register-brand__title {
+    font-size: 26px;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   Responsive — Mobile
+   ═══════════════════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+  .register-page {
+    flex-direction: column;
+  }
+
+  .register-brand {
+    display: none;
+  }
+
+  .register-form-side {
+    flex: 1 1 100%;
+    padding: var(--ch-space-8) var(--ch-space-4);
+    align-items: flex-start;
+    padding-top: var(--ch-space-10);
+  }
+
+  .register-form-card__heading {
+    font-size: 22px;
+  }
+
+  .register-form__row {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .register-form__submit {
+    height: 48px;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   Material Overrides — restrained, token-aligned
+   ═══════════════════════════════════════════════════════════════ */
+
+::ng-deep .register-form .mat-mdc-form-field-appearance-outline .mdc-text-field--outlined .mdc-notched-outline__leading,
+::ng-deep .register-form .mat-mdc-form-field-appearance-outline .mdc-text-field--outlined .mdc-notched-outline__trailing {
+  border-color: var(--ch-border);
+}
+
+::ng-deep .register-form .mat-mdc-form-field-appearance-outline.mat-focused .mdc-notched-outline__leading,
+::ng-deep .register-form .mat-mdc-form-field-appearance-outline.mat-focused .mdc-notched-outline__trailing {
+  border-color: var(--ch-primary) !important;
+}
+
+::ng-deep .register-form .mat-mdc-form-field-appearance-outline.mat-focused .mat-mdc-floating-label {
+  color: var(--ch-primary);
+}

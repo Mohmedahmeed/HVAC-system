@@ -1,0 +1,27 @@
+.ch-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--ch-space-12) var(--ch-space-6);
+  text-align: center;
+}
+
+.ch-empty-state__icon {
+  font-size: 56px;
+  width: 56px;
+  height: 56px;
+  color: var(--ch-text-muted);
+  margin-bottom: var(--ch-space-4);
+}
+
+.ch-empty-state__message {
+  font-size: 16px;
+  color: var(--ch-text-secondary);
+  margin: 0 0 var(--ch-space-6) 0;
+  max-width: 360px;
+}
+
+.ch-empty-state__action {
+  border-radius: var(--ch-radius);
+}

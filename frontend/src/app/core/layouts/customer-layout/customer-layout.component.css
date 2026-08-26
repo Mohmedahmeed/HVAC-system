@@ -1,0 +1,13 @@
+/* ═══════════════════════════════════════════════════════════════
+   Customer Layout — Top nav + content
+   ═══════════════════════════════════════════════════════════════ */
+
+.ch-customer-layout {
+  min-height: 100vh;
+  background: var(--ch-bg);
+}
+
+.ch-customer-layout__content {
+  padding-top: 64px;
+  min-height: calc(100vh - 64px);
+}

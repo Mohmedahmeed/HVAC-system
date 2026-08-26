@@ -1,0 +1,34 @@
+h2[mat-dialog-title] {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--ch-text);
+}
+
+p {
+  margin: 0;
+  color: var(--ch-text-secondary);
+  line-height: 1.6;
+}
+
+[mat-dialog-actions] {
+  padding: var(--ch-space-4) 0 0 0;
+  margin: 0;
+}
+
+/* ── Confirm Button Variants ──────────────────────────────── */
+
+button.ch-dialog-confirm--danger {
+  background-color: var(--ch-error);
+  color: var(--ch-text-inverse);
+}
+
+button.ch-dialog-confirm--warning {
+  background-color: var(--ch-warning);
+  color: var(--ch-text-inverse);
+}
+
+button.ch-dialog-confirm--info {
+  background-color: var(--ch-primary);
+  color: var(--ch-text-inverse);
+}

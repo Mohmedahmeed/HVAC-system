@@ -1,0 +1,58 @@
+.ch-alert {
+  display: flex;
+  align-items: center;
+  gap: var(--ch-space-3);
+  padding: var(--ch-space-3) var(--ch-space-4);
+  border-radius: var(--ch-radius);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.ch-alert__icon {
+  flex-shrink: 0;
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+}
+
+.ch-alert__message {
+  flex: 1;
+}
+
+.ch-alert__close {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  line-height: 32px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  opacity: 0.7;
+}
+
+.ch-alert__close:hover {
+  opacity: 1;
+}
+
+/* ── Type Variants ────────────────────────────────────────── */
+
+.ch-alert--success {
+  background: var(--ch-success-light);
+  color: var(--ch-success-text);
+}
+
+.ch-alert--error {
+  background: var(--ch-error-light);
+  color: var(--ch-error-text);
+}
+
+.ch-alert--warning {
+  background: var(--ch-warning-light);
+  color: var(--ch-warning-text);
+}
+
+.ch-alert--info {
+  background: var(--ch-info-light);
+  color: var(--ch-primary-dark);
+}

@@ -1,0 +1,119 @@
+/* ═══════════════════════════════════════════════════════════════
+   Contractor Layout — Sidebar + top bar + content
+   ═══════════════════════════════════════════════════════════════ */
+
+.ch-layout {
+  min-height: 100vh;
+}
+
+/* ─── Sidenav ───────────────────────────────────────────────── */
+
+.ch-layout__sidenav--desktop {
+  width: 240px;
+  background: var(--ch-primary-dark);
+  border-right: none;
+  padding-top: 64px;
+}
+
+.ch-layout__sidenav--mobile {
+  width: 280px;
+  background: var(--ch-primary-dark);
+  border-right: none;
+}
+
+.ch-layout__sidenav-header {
+  height: 64px;
+  display: flex;
+  align-items: center;
+  padding: 0 var(--ch-space-4);
+  background: var(--ch-primary-dark);
+}
+
+.ch-layout__sidenav-logo img {
+  height: 32px;
+  width: auto;
+  filter: brightness(0) invert(1);
+}
+
+/* ─── Navigation Links ──────────────────────────────────────── */
+
+.ch-layout__sidenav-nav {
+  display: flex;
+  flex-direction: column;
+  padding: var(--ch-space-2) var(--ch-space-2);
+}
+
+.ch-layout__sidenav-section-title {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: rgba(255, 255, 255, 0.45);
+  padding: var(--ch-space-3) var(--ch-space-3) var(--ch-space-1);
+}
+
+.ch-layout__sidenav-link {
+  display: flex;
+  align-items: center;
+  gap: var(--ch-space-3);
+  padding: var(--ch-space-2) var(--ch-space-3);
+  border-radius: var(--ch-radius);
+  color: rgba(255, 255, 255, 0.75);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.15s ease;
+  min-height: 40px;
+}
+
+.ch-layout__sidenav-link:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
+.ch-layout__sidenav-link--active {
+  background: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+}
+
+.ch-layout__sidenav-link mat-icon {
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.ch-layout__sidenav-label {
+  white-space: nowrap;
+}
+
+.ch-layout__sidenav-link--disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.ch-layout__sidenav-badge {
+  font-size: 10px;
+  background: var(--ch-accent);
+  color: var(--ch-text);
+  padding: 2px 6px;
+  border-radius: var(--ch-radius-full);
+  font-weight: 600;
+  margin-left: auto;
+}
+
+.ch-layout__sidenav-divider {
+  border-color: rgba(255, 255, 255, 0.12);
+  margin: var(--ch-space-2) var(--ch-space-3);
+}
+
+/* ─── Main Content ──────────────────────────────────────────── */
+
+.ch-layout__main {
+  background: var(--ch-bg);
+}
+
+.ch-layout__content {
+  padding-top: 64px;
+  min-height: calc(100vh - 64px);
+}

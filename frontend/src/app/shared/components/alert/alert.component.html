@@ -1,0 +1,12 @@
+<div class="ch-alert ch-alert--{{ type }}" role="alert">
+  <mat-icon class="ch-alert__icon">{{ icon }}</mat-icon>
+  <span class="ch-alert__message">{{ message }}</span>
+  <button
+    *ngIf="dismissible"
+    mat-icon-button
+    class="ch-alert__close"
+    aria-label="Dismiss alert"
+    (click)="onDismiss()">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>

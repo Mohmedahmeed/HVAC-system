@@ -1,0 +1,177 @@
+<!-- ═══════════════════════════════════════════════════════════════
+     Customer Dashboard
+     ═══════════════════════════════════════════════════════════════ -->
+
+<!-- ─── Loading State ────────────────────────────────────────── -->
+<div *ngIf="isLoading" class="ch-container ch-dashboard">
+  <div class="ch-dashboard__greeting">
+    <app-skeleton variant="text"></app-skeleton>
+  </div>
+  <div class="ch-dashboard__kpis">
+    <div class="ch-card ch-dashboard__kpi-skeleton" *ngFor="let i of [1,2,3]">
+      <app-skeleton variant="card"></app-skeleton>
+    </div>
+  </div>
+  <div class="ch-card ch-dashboard__section">
+    <app-skeleton variant="card"></app-skeleton>
+  </div>
+</div>
+
+<!-- ─── Error State ─────────────────────────────────────────── -->
+<div *ngIf="!isLoading && hasError" class="ch-container ch-dashboard">
+  <app-alert type="error" [message]="errorMessage" (dismiss)="onRetry()"></app-alert>
+  <div style="text-align: center; margin-top: var(--ch-space-6);">
+    <button mat-stroked-button color="primary" (click)="onRetry()">Try Again</button>
+  </div>
+</div>
+
+<!-- ─── Success State ───────────────────────────────────────── -->
+<div *ngIf="!isLoading && !hasError" class="ch-container ch-dashboard">
+
+  <!-- Header -->
+  <div class="ch-dashboard__header">
+    <div class="ch-dashboard__greeting">
+      <h1 class="ch-dashboard__title">{{ greeting }}, {{ currentUser?.firstName }}</h1>
+      <p class="ch-dashboard__subtitle">Here's an overview of your HVAC services.</p>
+    </div>
+    <button
+      mat-flat-button
+      color="primary"
+      class="ch-dashboard__cta"
+      (click)="onRequestService()"
+    >
+      <mat-icon>add</mat-icon>
+      Request HVAC Service
+    </button>
+  </div>
+
+  <!-- KPI Cards -->
+  <div class="ch-dashboard__kpis">
+    <div class="ch-card ch-dashboard__kpi">
+      <div class="ch-dashboard__kpi-icon ch-dashboard__kpi-icon--primary">
+        <mat-icon>description</mat-icon>
+      </div>
+      <div class="ch-dashboard__kpi-data">
+        <span class="ch-dashboard__kpi-value">{{ activeRequestCount }}</span>
+        <span class="ch-dashboard__kpi-label">Active Requests</span>
+      </div>
+    </div>
+
+    <div class="ch-card ch-dashboard__kpi">
+      <div class="ch-dashboard__kpi-icon ch-dashboard__kpi-icon--accent">
+        <mat-icon>event</mat-icon>
+      </div>
+      <div class="ch-dashboard__kpi-data">
+        <span class="ch-dashboard__kpi-value">{{ upcomingAppointmentCount }}</span>
+        <span class="ch-dashboard__kpi-label">Upcoming Appointments</span>
+      </div>
+    </div>
+
+    <div class="ch-card ch-dashboard__kpi">
+      <div class="ch-dashboard__kpi-icon ch-dashboard__kpi-icon--success">
+        <mat-icon>check_circle</mat-icon>
+      </div>
+      <div class="ch-dashboard__kpi-data">
+        <span class="ch-dashboard__kpi-value">{{ completedJobCount }}</span>
+        <span class="ch-dashboard__kpi-label">Completed Jobs</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Recent Service Requests -->
+  <div class="ch-card ch-dashboard__section">
+    <div class="ch-dashboard__section-header">
+      <h2 class="ch-dashboard__section-title">Recent Service Requests</h2>
+    </div>
+
+    <app-empty-state
+      *ngIf="requests.length === 0"
+      icon="inbox"
+      message="No service requests yet"
+      actionText="Request HVAC Service"
+      (actionClick)="onRequestService()"
+    ></app-empty-state>
+
+    <div *ngIf="requests.length > 0" class="ch-dashboard__request-list">
+      <div
+        *ngFor="let req of recentRequests"
+        class="ch-dashboard__request-row"
+      >
+        <div class="ch-dashboard__request-main">
+          <div class="ch-dashboard__request-info">
+            <span class="ch-dashboard__request-type">{{ formatServiceType(req.serviceType) }}</span>
+            <span class="ch-dashboard__request-desc">{{ req.problemDescription }}</span>
+          </div>
+          <div class="ch-dashboard__request-meta">
+            <app-badge [status]="req.status"></app-badge>
+            <app-badge [status]="req.urgency"></app-badge>
+          </div>
+        </div>
+        <div class="ch-dashboard__request-footer">
+          <span class="ch-dashboard__request-date">
+            <mat-icon>schedule</mat-icon>
+            {{ formatDate(req.createdAt) }}
+          </span>
+          <span class="ch-dashboard__request-zip" *ngIf="req.zipCode">
+            <mat-icon>location_on</mat-icon>
+            {{ req.zipCode }}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Upcoming Appointments -->
+  <div class="ch-card ch-dashboard__section">
+    <div class="ch-dashboard__section-header">
+      <h2 class="ch-dashboard__section-title">Upcoming Appointments</h2>
+    </div>
+
+    <app-empty-state
+      *ngIf="upcomingAppointments.length === 0"
+      icon="event_busy"
+      message="No upcoming appointments"
+    ></app-empty-state>
+
+    <div *ngIf="upcomingAppointments.length > 0" class="ch-dashboard__appointment-list">
+      <div
+        *ngFor="let apt of upcomingAppointments"
+        class="ch-dashboard__appointment-row"
+      >
+        <div class="ch-dashboard__apt-icon">
+          <mat-icon>event</mat-icon>
+        </div>
+        <div class="ch-dashboard__apt-info">
+          <span class="ch-dashboard__apt-service">{{ apt.serviceRequest?.serviceType }}</span>
+          <span class="ch-dashboard__apt-contractor">
+            with {{ apt.contractor?.firstName }} {{ apt.contractor?.lastName }}
+          </span>
+          <span class="ch-dashboard__apt-datetime">
+            <mat-icon>calendar_today</mat-icon>
+            {{ formatDate(apt.scheduledStart) }} at {{ formatTime(apt.scheduledStart) }}
+          </span>
+          <span class="ch-dashboard__apt-notes" *ngIf="apt.notes">
+            <mat-icon>sticky_note_2</mat-icon>
+            {{ apt.notes }}
+          </span>
+        </div>
+        <div class="ch-dashboard__apt-status">
+          <app-badge [status]="apt.status"></app-badge>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Actions -->
+  <div class="ch-dashboard__actions">
+    <button
+      mat-flat-button
+      color="primary"
+      class="ch-dashboard__action-btn"
+      (click)="onRequestService()"
+    >
+      <mat-icon>add_circle</mat-icon>
+      Request HVAC Service
+    </button>
+  </div>
+</div>

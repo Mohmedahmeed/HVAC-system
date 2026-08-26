@@ -1,0 +1,263 @@
+<!-- ═══════════════════════════════════════════════════════════════
+     New Service Request — 4-Step Stepper
+     ═══════════════════════════════════════════════════════════════ -->
+
+<div class="ch-container ch-new-request" *ngIf="!submitSuccess">
+
+  <!-- Header -->
+  <div class="ch-new-request__header">
+    <h1 class="ch-new-request__title">Request HVAC Service</h1>
+    <p class="ch-new-request__subtitle">
+      Tell us about your HVAC issue and we'll match you with a qualified contractor.
+    </p>
+  </div>
+
+  <!-- Progress Bar -->
+  <mat-progress-bar
+    mode="determinate"
+    [value]="((currentStep + 1) / 4) * 100"
+    color="primary"
+    class="ch-new-request__progress"
+  ></mat-progress-bar>
+
+  <!-- Stepper -->
+  <mat-stepper
+    linear
+    #stepper
+    [selectedIndex]="currentStep"
+    (selectionChange)="currentStep = $event.selectedIndex"
+    class="ch-new-request__stepper"
+  >
+
+    <!-- ─── Step 1: Service Type + Urgency ──────────────────── -->
+    <mat-step [stepControl]="step1" label="Service Type">
+      <div class="ch-new-request__step">
+        <h2 class="ch-new-request__step-title">What type of service do you need?</h2>
+        <p class="ch-new-request__step-desc">Select the service that best describes your HVAC issue.</p>
+
+        <div class="ch-new-request__field">
+          <mat-form-field appearance="outline" class="ch-new-request__full-width">
+            <mat-label>Service Type</mat-label>
+            <mat-select formControlName="serviceType">
+              <mat-option *ngFor="let type of serviceTypes" [value]="type.value">
+                {{ type.label }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="step1.get('serviceType')?.hasError('required')">
+              Please select a service type
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="ch-new-request__field">
+          <label class="ch-new-request__radio-label">Urgency Level</label>
+          <div class="ch-new-request__urgency-options">
+            <label
+              *ngFor="let u of urgencies"
+              class="ch-new-request__urgency-card"
+              [class.ch-new-request__urgency-card--selected]="step1.get('urgency')?.value === u.value"
+            >
+              <input
+                type="radio"
+                formControlName="urgency"
+                [value]="u.value"
+                class="ch-new-request__radio-input"
+              />
+              <div class="ch-new-request__urgency-content">
+                <span class="ch-new-request__urgency-label">{{ u.label }}</span>
+                <span class="ch-new-request__urgency-desc">{{ u.desc }}</span>
+              </div>
+            </label>
+          </div>
+          <mat-error *ngIf="step1.get('urgency')?.touched && step1.get('urgency')?.hasError('required')">
+            Please select an urgency level
+          </mat-error>
+        </div>
+      </div>
+    </mat-step>
+
+    <!-- ─── Step 2: Problem Details ──────────────────────────── -->
+    <mat-step [stepControl]="step2" label="Problem Details">
+      <div class="ch-new-request__step">
+        <h2 class="ch-new-request__step-title">Describe the problem</h2>
+        <p class="ch-new-request__step-desc">Provide as much detail as possible so the contractor can prepare.</p>
+
+        <div class="ch-new-request__field">
+          <mat-form-field appearance="outline" class="ch-new-request__full-width">
+            <mat-label>Problem Description</mat-label>
+            <textarea
+              matInput
+              formControlName="problemDescription"
+              rows="4"
+              placeholder="e.g., AC is blowing warm air, making unusual noises, thermostat not responding..."
+            ></textarea>
+            <mat-hint>{{ step2.get('problemDescription')?.value?.length || 0 }} / 500</mat-hint>
+            <mat-error *ngIf="step2.get('problemDescription')?.hasError('required')">
+              Problem description is required
+            </mat-error>
+            <mat-error *ngIf="step2.get('problemDescription')?.hasError('minlength')">
+              Please provide at least 10 characters
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="ch-new-request__row">
+          <div class="ch-new-request__field">
+            <mat-form-field appearance="outline" class="ch-new-request__full-width">
+              <mat-label>Property Type</mat-label>
+              <mat-select formControlName="propertyType">
+                <mat-option value="">Select (optional)</mat-option>
+                <mat-option *ngFor="let pt of propertyTypes" [value]="pt.value">
+                  {{ pt.label }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <div class="ch-new-request__field">
+            <mat-form-field appearance="outline" class="ch-new-request__full-width">
+              <mat-label>Square Footage</mat-label>
+              <input matInput type="number" formControlName="squareFootage" min="0" placeholder="e.g., 1500" />
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="ch-new-request__field">
+          <mat-form-field appearance="outline" class="ch-new-request__full-width">
+            <mat-label>HVAC System Type</mat-label>
+            <mat-select formControlName="hvacSystemType">
+              <mat-option value="">Select (optional)</mat-option>
+              <mat-option *ngFor="let h of hvacSystemTypes" [value]="h.value">
+                {{ h.label }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+    </mat-step>
+
+    <!-- ─── Step 3: Location + Date ──────────────────────────── -->
+    <mat-step [stepControl]="step3" label="Location & Date">
+      <div class="ch-new-request__step">
+        <h2 class="ch-new-request__step-title">Where and when?</h2>
+        <p class="ch-new-request__step-desc">Enter your location and preferred service date.</p>
+
+        <div class="ch-new-request__row">
+          <div class="ch-new-request__field">
+            <mat-form-field appearance="outline" class="ch-new-request__full-width">
+              <mat-label>ZIP Code</mat-label>
+              <input matInput formControlName="zipCode" maxlength="5" placeholder="e.g., 85001" />
+              <mat-hint>5-digit Phoenix area ZIP code</mat-hint>
+              <mat-error *ngIf="step3.get('zipCode')?.hasError('required')">
+                ZIP code is required
+              </mat-error>
+              <mat-error *ngIf="step3.get('zipCode')?.hasError('pattern')">
+                Must be a valid 5-digit ZIP code
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="ch-new-request__field">
+            <mat-form-field appearance="outline" class="ch-new-request__full-width">
+              <mat-label>Preferred Date</mat-label>
+              <input matInput [matDatepicker]="picker" formControlName="preferredDate" [min]="minDate" />
+              <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+              <mat-hint>Optional — when would you like service?</mat-hint>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="ch-new-request__field">
+          <mat-form-field appearance="outline" class="ch-new-request__full-width">
+            <mat-label>Street Address</mat-label>
+            <input matInput formControlName="address" placeholder="e.g., 1234 W Camelback Rd, Phoenix, AZ" />
+            <mat-hint>Optional — helps the contractor find you</mat-hint>
+          </mat-form-field>
+        </div>
+      </div>
+    </mat-step>
+
+    <!-- ─── Step 4: Review ───────────────────────────────────── -->
+    <mat-step label="Review">
+      <div class="ch-new-request__step">
+        <h2 class="ch-new-request__step-title">Review your request</h2>
+        <p class="ch-new-request__step-desc">Please confirm all details before submitting.</p>
+
+        <div class="ch-new-request__review-card" *ngIf="reviewKeys.length > 0">
+          <div class="ch-new-request__review-row" *ngFor="let key of reviewKeys">
+            <span class="ch-new-request__review-label">{{ key }}</span>
+            <span class="ch-new-request__review-value">{{ reviewData[key] }}</span>
+          </div>
+        </div>
+
+        <app-alert
+          *ngIf="errorMessage"
+          type="error"
+          [message]="errorMessage"
+          (dismiss)="errorMessage = ''"
+        ></app-alert>
+
+        <div class="ch-new-request__submit-actions">
+          <button
+            mat-flat-button
+            color="primary"
+            (click)="submit()"
+            [disabled]="isSubmitting"
+            class="ch-new-request__submit-btn"
+          >
+            <mat-icon *ngIf="!isSubmitting">send</mat-icon>
+            <mat-spinner
+              *ngIf="isSubmitting"
+              diameter="20"
+              class="ch-new-request__spinner"
+            ></mat-spinner>
+            {{ isSubmitting ? 'Submitting...' : 'Submit Request' }}
+          </button>
+        </div>
+      </div>
+    </mat-step>
+  </mat-stepper>
+
+  <!-- Navigation Buttons -->
+  <div class="ch-new-request__nav">
+    <button
+      mat-stroked-button
+      (click)="back()"
+      *ngIf="currentStep > 0"
+      [disabled]="isSubmitting"
+    >
+      <mat-icon>arrow_back</mat-icon>
+      Back
+    </button>
+    <div class="ch-new-request__nav-spacer"></div>
+    <button
+      mat-flat-button
+      color="primary"
+      (click)="next()"
+      *ngIf="currentStep < 2"
+      [disabled]="!step1.valid && currentStep === 0 || !step2.valid && currentStep === 1"
+    >
+      Next
+      <mat-icon>arrow_forward</mat-icon>
+    </button>
+  </div>
+</div>
+
+<!-- ─── Success State ──────────────────────────────────────── -->
+<div class="ch-container ch-new-request ch-new-request__success" *ngIf="submitSuccess">
+  <div class="ch-new-request__success-card">
+    <div class="ch-new-request__success-icon">
+      <mat-icon>check_circle</mat-icon>
+    </div>
+    <h2 class="ch-new-request__success-title">Request Submitted!</h2>
+    <p class="ch-new-request__success-desc">
+      Your HVAC service request has been submitted successfully. Qualified contractors in
+      your area will be notified and you'll receive updates as they respond.
+    </p>
+    <button mat-flat-button color="primary" (click)="goToDashboard()">
+      <mat-icon>dashboard</mat-icon>
+      Go to Dashboard
+    </button>
+  </div>
+</div>

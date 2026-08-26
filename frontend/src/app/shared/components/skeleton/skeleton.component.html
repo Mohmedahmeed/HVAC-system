@@ -1,0 +1,36 @@
+<!-- Card skeleton -->
+<ng-container *ngIf="variant === 'card'">
+  <div class="ch-skeleton ch-skeleton--card" role="status" aria-busy="true" aria-label="Loading content">
+    <div class="ch-skeleton__line ch-skeleton__line--title"></div>
+    <div class="ch-skeleton__line ch-skeleton__line--body"></div>
+    <div class="ch-skeleton__line ch-skeleton__line--body ch-skeleton__line--short"></div>
+  </div>
+</ng-container>
+
+<!-- Text skeleton -->
+<ng-container *ngIf="variant === 'text'">
+  <div class="ch-skeleton ch-skeleton--text" role="status" aria-busy="true" aria-label="Loading text">
+    <div class="ch-skeleton__line ch-skeleton__line--title"></div>
+    <div class="ch-skeleton__line ch-skeleton__line--subtitle"></div>
+  </div>
+</ng-container>
+
+<!-- List skeleton -->
+<ng-container *ngIf="variant === 'list'">
+  <div class="ch-skeleton ch-skeleton--list" role="status" aria-busy="true" aria-label="Loading list">
+    <div class="ch-skeleton__row" *ngFor="let i of [1, 2, 3]">
+      <div class="ch-skeleton__avatar"></div>
+      <div class="ch-skeleton__row-text">
+        <div class="ch-skeleton__line ch-skeleton__line--body"></div>
+        <div class="ch-skeleton__line ch-skeleton__line--subtitle"></div>
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+<!-- Avatar skeleton -->
+<ng-container *ngIf="variant === 'avatar'">
+  <div class="ch-skeleton ch-skeleton--avatar" role="status" aria-busy="true" aria-label="Loading avatar">
+    <div class="ch-skeleton__avatar ch-skeleton__avatar--lg"></div>
+  </div>
+</ng-container>
