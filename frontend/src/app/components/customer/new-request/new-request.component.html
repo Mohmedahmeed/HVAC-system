@@ -25,7 +25,7 @@
     linear
     #stepper
     [selectedIndex]="currentStep"
-    (selectionChange)="currentStep = $event.selectedIndex"
+    (selectionChange)="onStepChange($event)"
     class="ch-new-request__stepper"
   >
 
@@ -236,7 +236,7 @@
       color="primary"
       (click)="next()"
       *ngIf="currentStep < 2"
-      [disabled]="!step1.valid && currentStep === 0 || !step2.valid && currentStep === 1"
+      [disabled]="(!step1.valid && currentStep === 0) || (!step2.valid && currentStep === 1)"
     >
       Next
       <mat-icon>arrow_forward</mat-icon>

@@ -97,6 +97,12 @@ export class NewRequestComponent implements OnInit, OnDestroy {
     }
   }
 
+  onStepChange(event: { selectedIndex: number }): void {
+    if (event.selectedIndex < this.currentStep) {
+      this.currentStep = event.selectedIndex;
+    }
+  }
+
   submit(): void {
     if (this.isSubmitting) return;
 

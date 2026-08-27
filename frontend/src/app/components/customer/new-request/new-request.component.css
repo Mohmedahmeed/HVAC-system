@@ -15,16 +15,14 @@
 }
 
 .ch-new-request__title {
-  font-family: var(--ch-font-family);
-  font-size: var(--ch-text-2xl);
+  font-size: 28px;
   font-weight: 700;
-  color: var(--ch-text-primary);
+  color: var(--ch-text);
   margin: 0 0 var(--ch-space-2) 0;
 }
 
 .ch-new-request__subtitle {
-  font-family: var(--ch-font-family);
-  font-size: var(--ch-text-base);
+  font-size: 16px;
   color: var(--ch-text-secondary);
   margin: 0;
 }
@@ -57,16 +55,14 @@
 }
 
 .ch-new-request__step-title {
-  font-family: var(--ch-font-family);
-  font-size: var(--ch-text-xl);
+  font-size: 22px;
   font-weight: 600;
-  color: var(--ch-text-primary);
+  color: var(--ch-text);
   margin: 0 0 var(--ch-space-2) 0;
 }
 
 .ch-new-request__step-desc {
-  font-family: var(--ch-font-family);
-  font-size: var(--ch-text-sm);
+  font-size: 14px;
   color: var(--ch-text-secondary);
   margin: 0 0 var(--ch-space-6) 0;
 }
@@ -89,10 +85,9 @@
 
 .ch-new-request__radio-label {
   display: block;
-  font-family: var(--ch-font-family);
-  font-size: var(--ch-text-sm);
+  font-size: 14px;
   font-weight: 500;
-  color: var(--ch-text-primary);
+  color: var(--ch-text);
   margin-bottom: var(--ch-space-3);
 }
 
@@ -118,12 +113,12 @@
 
 .ch-new-request__urgency-card:hover {
   border-color: var(--ch-primary-light);
-  background: rgba(30, 64, 175, 0.02);
+  background: var(--ch-primary-light);
 }
 
 .ch-new-request__urgency-card--selected {
   border-color: var(--ch-primary);
-  background: rgba(30, 64, 175, 0.04);
+  background: var(--ch-primary-light);
 }
 
 .ch-new-request__radio-input {
@@ -139,15 +134,13 @@
 }
 
 .ch-new-request__urgency-label {
-  font-family: var(--ch-font-family);
-  font-size: var(--ch-text-base);
+  font-size: 16px;
   font-weight: 600;
-  color: var(--ch-text-primary);
+  color: var(--ch-text);
 }
 
 .ch-new-request__urgency-desc {
-  font-family: var(--ch-font-family);
-  font-size: var(--ch-text-xs);
+  font-size: 12px;
   color: var(--ch-text-secondary);
 }
 
@@ -166,7 +159,7 @@
   justify-content: space-between;
   align-items: flex-start;
   padding: var(--ch-space-3) 0;
-  border-bottom: 1px solid var(--ch-border-light);
+  border-bottom: 1px solid var(--ch-divider);
 }
 
 .ch-new-request__review-row:last-child {
@@ -174,17 +167,15 @@
 }
 
 .ch-new-request__review-label {
-  font-family: var(--ch-font-family);
-  font-size: var(--ch-text-sm);
+  font-size: 14px;
   font-weight: 500;
   color: var(--ch-text-secondary);
   flex-shrink: 0;
 }
 
 .ch-new-request__review-value {
-  font-family: var(--ch-font-family);
-  font-size: var(--ch-text-sm);
-  color: var(--ch-text-primary);
+  font-size: 14px;
+  color: var(--ch-text);
   text-align: right;
   word-break: break-word;
   margin-left: var(--ch-space-4);
@@ -203,7 +194,7 @@
   align-items: center;
   gap: var(--ch-space-2);
   padding: var(--ch-space-3) var(--ch-space-8);
-  font-size: var(--ch-text-base);
+  font-size: 16px;
 }
 
 .ch-new-request__spinner {
@@ -252,16 +243,14 @@
 }
 
 .ch-new-request__success-title {
-  font-family: var(--ch-font-family);
-  font-size: var(--ch-text-2xl);
+  font-size: 28px;
   font-weight: 700;
-  color: var(--ch-text-primary);
+  color: var(--ch-text);
   margin: 0 0 var(--ch-space-3) 0;
 }
 
 .ch-new-request__success-desc {
-  font-family: var(--ch-font-family);
-  font-size: var(--ch-text-base);
+  font-size: 16px;
   color: var(--ch-text-secondary);
   line-height: 1.6;
   margin: 0 0 var(--ch-space-6) 0;
