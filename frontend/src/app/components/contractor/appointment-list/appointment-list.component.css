@@ -1,0 +1,180 @@
+/* ═══════════════════════════════════════════════════════════════
+   Appointment List
+   ═══════════════════════════════════════════════════════════════ */
+
+.ch-appt-list__header {
+  margin-bottom: var(--ch-space-6);
+}
+
+.ch-appt-list__title {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--ch-text);
+  margin: 0;
+}
+
+.ch-appt-list__subtitle {
+  font-size: 16px;
+  color: var(--ch-text-secondary);
+  margin: var(--ch-space-1) 0 0;
+}
+
+/* ─── Skeleton ───────────────────────────────────────────────── */
+
+.ch-appt-list__skeleton {
+  padding: var(--ch-space-3) 0;
+}
+
+.ch-appt-list__skeleton + .ch-appt-list__skeleton {
+  border-top: 1px solid var(--ch-divider);
+}
+
+/* ─── Sections ───────────────────────────────────────────────── */
+
+.ch-appt-list__section {
+  margin-bottom: var(--ch-space-8);
+}
+
+.ch-appt-list__section-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--ch-text);
+  margin: 0 0 var(--ch-space-4);
+}
+
+/* ─── Cards ──────────────────────────────────────────────────── */
+
+.ch-appt-list__cards {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ch-space-4);
+}
+
+.ch-appt-list__card {
+  padding: var(--ch-space-5);
+}
+
+.ch-appt-list__card--completed {
+  opacity: 0.85;
+}
+
+.ch-appt-list__card--other {
+  opacity: 0.7;
+}
+
+.ch-appt-list__card-header {
+  display: flex;
+  align-items: center;
+  gap: var(--ch-space-4);
+  margin-bottom: var(--ch-space-4);
+}
+
+.ch-appt-list__card-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--ch-radius-lg);
+  background: var(--ch-primary-light);
+  color: var(--ch-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.ch-appt-list__card-icon--completed {
+  background: var(--ch-success-light);
+  color: var(--ch-success);
+}
+
+.ch-appt-list__card-icon--other {
+  background: var(--ch-divider);
+  color: var(--ch-text-muted);
+}
+
+.ch-appt-list__card-info {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
+.ch-appt-list__card-service {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--ch-text);
+}
+
+.ch-appt-list__card-customer {
+  font-size: 14px;
+  color: var(--ch-text-secondary);
+}
+
+/* ─── Details ────────────────────────────────────────────────── */
+
+.ch-appt-list__card-details {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ch-space-4);
+  margin-bottom: var(--ch-space-3);
+}
+
+.ch-appt-list__detail {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 14px;
+  color: var(--ch-text-secondary);
+}
+
+.ch-appt-list__detail mat-icon {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+}
+
+/* ─── Notes ──────────────────────────────────────────────────── */
+
+.ch-appt-list__card-notes {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  font-size: 14px;
+  color: var(--ch-text-secondary);
+  font-style: italic;
+  padding: var(--ch-space-3);
+  background: var(--ch-divider);
+  border-radius: var(--ch-radius);
+  margin-bottom: var(--ch-space-3);
+}
+
+.ch-appt-list__card-notes mat-icon {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* ─── Actions ────────────────────────────────────────────────── */
+
+.ch-appt-list__card-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.ch-appt-list__spinner {
+  display: inline-block;
+}
+
+/* ─── Responsive ─────────────────────────────────────────────── */
+
+@media (max-width: 640px) {
+  .ch-appt-list__card-header {
+    flex-wrap: wrap;
+  }
+
+  .ch-appt-list__card-details {
+    flex-direction: column;
+    gap: var(--ch-space-2);
+  }
+}

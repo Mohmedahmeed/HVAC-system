@@ -1,0 +1,159 @@
+<!-- ═══════════════════════════════════════════════════════════════
+     Weekly Availability
+     ═══════════════════════════════════════════════════════════════ -->
+
+<!-- ─── Loading State ────────────────────────────────────────── -->
+<div *ngIf="isLoading" class="ch-container ch-avail">
+  <div class="ch-avail__header">
+    <app-skeleton variant="text"></app-skeleton>
+  </div>
+  <div class="ch-avail__cards">
+    <div class="ch-card ch-avail__day-skeleton" *ngFor="let i of [1,2,3,4,5]">
+      <app-skeleton variant="card"></app-skeleton>
+    </div>
+  </div>
+</div>
+
+<!-- ─── Error State ─────────────────────────────────────────── -->
+<div *ngIf="!isLoading && hasError" class="ch-container ch-avail">
+  <div class="ch-avail__header">
+    <h1 class="ch-avail__title">Weekly Availability</h1>
+  </div>
+  <app-alert type="error" [message]="errorMessage" (dismiss)="loadAvailability()"></app-alert>
+  <div style="text-align: center; margin-top: var(--ch-space-6);">
+    <button mat-stroked-button color="primary" (click)="loadAvailability()">Try Again</button>
+  </div>
+</div>
+
+<!-- ─── Success State ───────────────────────────────────────── -->
+<div *ngIf="!isLoading && !hasError" class="ch-container ch-avail">
+
+  <!-- Header -->
+  <div class="ch-avail__header">
+    <div>
+      <h1 class="ch-avail__title">Weekly Availability</h1>
+      <p class="ch-avail__subtitle">Set your working hours for each day of the week.</p>
+    </div>
+  </div>
+
+  <!-- Alerts -->
+  <app-alert *ngIf="successMessage" type="success" [message]="successMessage" [dismissible]="true" (dismiss)="successMessage = ''"></app-alert>
+  <app-alert *ngIf="errorMessage && !successMessage" type="error" [message]="errorMessage" [dismissible]="true" (dismiss)="errorMessage = ''"></app-alert>
+
+  <!-- Day Cards -->
+  <div class="ch-avail__cards">
+    <app-empty-state
+      *ngIf="schedule.length === 0"
+      icon="event_busy"
+      message="No availability set"
+      actionText="Set Your Hours"
+      (actionClick)="showAddDay = true"
+    ></app-empty-state>
+
+    <div
+      *ngFor="let day of schedule; trackBy: trackByDay"
+      class="ch-card ch-avail__day-card"
+      [class.ch-avail__day-card--unsaved]="day.isNew"
+    >
+      <div class="ch-avail__day-header">
+        <div class="ch-avail__day-name">
+          <mat-icon *ngIf="day.isNew" class="ch-avail__new-badge">fiber_new</mat-icon>
+          {{ dayLabels[day.dayOfWeek] }}
+        </div>
+        <div class="ch-avail__day-actions">
+          <mat-slide-toggle
+            [checked]="day.emergencyAvailable"
+            (change)="day.emergencyAvailable = !day.emergencyAvailable; onToggleEmergency(day)"
+            [disabled]="day.isSaving"
+            color="primary"
+            class="ch-avail__emergency-toggle"
+          >
+            <span class="ch-avail__emergency-label">Emergency</span>
+          </mat-slide-toggle>
+          <button
+            mat-icon-button
+            class="ch-avail__delete-btn"
+            (click)="onDeleteDay(day)"
+            [disabled]="day.isSaving"
+            aria-label="Delete schedule"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </div>
+
+      <div class="ch-avail__time-row">
+        <div class="ch-avail__time-field">
+          <label class="ch-avail__time-label">Start Time</label>
+          <input
+            type="time"
+            class="ch-avail__time-input"
+            [(ngModel)]="day.startTime"
+            [disabled]="day.isSaving"
+          />
+        </div>
+        <span class="ch-avail__time-separator">to</span>
+        <div class="ch-avail__time-field">
+          <label class="ch-avail__time-label">End Time</label>
+          <input
+            type="time"
+            class="ch-avail__time-input"
+            [(ngModel)]="day.endTime"
+            [disabled]="day.isSaving"
+          />
+        </div>
+        <div class="ch-avail__save-wrapper">
+          <button
+            mat-flat-button
+            color="primary"
+            class="ch-avail__save-btn"
+            (click)="onSaveDay(day)"
+            [disabled]="day.isSaving || !day.startTime || !day.endTime || day.startTime >= day.endTime"
+          >
+            <mat-spinner *ngIf="day.isSaving" diameter="18" class="ch-avail__spinner"></mat-spinner>
+            <span *ngIf="!day.isSaving">{{ day.isNew ? 'Save' : 'Update' }}</span>
+          </button>
+        </div>
+      </div>
+
+      <div *ngIf="day.startTime && day.endTime && day.startTime >= day.endTime" class="ch-avail__time-error">
+        <mat-icon>warning</mat-icon>
+        End time must be after start time.
+      </div>
+    </div>
+  </div>
+
+  <!-- Add Day -->
+  <div *ngIf="!showAddDay && availableDays.length > 0" class="ch-avail__add-section">
+    <button
+      mat-stroked-button
+      color="primary"
+      (click)="showAddDay = true"
+    >
+      <mat-icon>add</mat-icon>
+      Add Day
+    </button>
+  </div>
+
+  <div *ngIf="showAddDay" class="ch-card ch-avail__add-form">
+    <h3 class="ch-avail__add-title">Add Working Day</h3>
+    <app-alert *ngIf="addDayError" type="warning" [message]="addDayError" [dismissible]="true" (dismiss)="addDayError = ''"></app-alert>
+    <div class="ch-avail__add-row">
+      <mat-form-field appearance="outline" class="ch-avail__day-select">
+        <mat-label>Day of Week</mat-label>
+        <mat-select [(ngModel)]="selectedNewDay">
+          <mat-option *ngFor="let d of availableDays" [value]="d">
+            {{ dayLabels[d] }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <button mat-flat-button color="primary" (click)="onAddDay()">
+        <mat-icon>add</mat-icon>
+        Add
+      </button>
+      <button mat-stroked-button (click)="showAddDay = false; selectedNewDay = ''; addDayError = ''">
+        Cancel
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,178 @@
+<!-- ═══════════════════════════════════════════════════════════════
+     Appointment List
+     ═══════════════════════════════════════════════════════════════ -->
+
+<div class="ch-container ch-appt-list">
+
+  <!-- Header -->
+  <div class="ch-appt-list__header">
+    <h1 class="ch-appt-list__title">Appointments</h1>
+    <p class="ch-appt-list__subtitle">Manage your scheduled service appointments.</p>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="isLoading" class="ch-card">
+    <div class="ch-appt-list__skeleton" *ngFor="let i of [1,2,3]">
+      <app-skeleton variant="card"></app-skeleton>
+    </div>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="!isLoading && hasError">
+    <app-alert type="error" [message]="errorMessage" (dismiss)="dismissError()"></app-alert>
+    <div style="text-align: center; margin-top: var(--ch-space-6);">
+      <button mat-stroked-button color="primary" (click)="onRetry()">Try Again</button>
+    </div>
+  </div>
+
+  <!-- Success Banner -->
+  <app-alert
+    *ngIf="successMessage"
+    type="success"
+    [message]="successMessage"
+    (dismiss)="dismissSuccess()"
+  ></app-alert>
+
+  <!-- Content -->
+  <div *ngIf="!isLoading && !hasError">
+
+    <!-- Empty State -->
+    <app-empty-state
+      *ngIf="appointments.length === 0"
+      icon="event_busy"
+      message="No appointments yet"
+    ></app-empty-state>
+
+    <!-- Scheduled Appointments -->
+    <div *ngIf="scheduledAppointments.length > 0" class="ch-appt-list__section">
+      <h2 class="ch-appt-list__section-title">Upcoming</h2>
+      <div class="ch-appt-list__cards">
+        <div
+          *ngFor="let apt of scheduledAppointments"
+          class="ch-appt-list__card ch-card"
+        >
+          <div class="ch-appt-list__card-header">
+            <div class="ch-appt-list__card-icon">
+              <mat-icon>event</mat-icon>
+            </div>
+            <div class="ch-appt-list__card-info">
+              <span class="ch-appt-list__card-service">{{ apt.serviceRequest?.serviceType }}</span>
+              <span class="ch-appt-list__card-customer">
+                {{ apt.serviceRequest?.customer?.firstName }} {{ apt.serviceRequest?.customer?.lastName }}
+              </span>
+            </div>
+            <app-badge [status]="apt.status"></app-badge>
+          </div>
+
+          <div class="ch-appt-list__card-details">
+            <span class="ch-appt-list__detail">
+              <mat-icon>calendar_today</mat-icon>
+              {{ formatDate(apt.scheduledStart) }}
+            </span>
+            <span class="ch-appt-list__detail">
+              <mat-icon>schedule</mat-icon>
+              {{ formatTime(apt.scheduledStart) }} — {{ formatTime(apt.scheduledEnd) }}
+            </span>
+            <span class="ch-appt-list__detail" *ngIf="apt.serviceRequest?.zipCode">
+              <mat-icon>location_on</mat-icon>
+              {{ apt.serviceRequest.zipCode }}
+            </span>
+          </div>
+
+          <div class="ch-appt-list__card-notes" *ngIf="apt.notes">
+            <mat-icon>sticky_note_2</mat-icon>
+            {{ apt.notes }}
+          </div>
+
+          <div class="ch-appt-list__card-actions">
+            <button
+              mat-flat-button
+              color="primary"
+              (click)="onComplete(apt)"
+              [disabled]="updatingId === apt.id"
+            >
+              <mat-spinner
+                *ngIf="updatingId === apt.id"
+                diameter="16"
+                class="ch-appt-list__spinner"
+              ></mat-spinner>
+              <mat-icon *ngIf="updatingId !== apt.id">check_circle</mat-icon>
+              {{ updatingId === apt.id ? 'Updating...' : 'Mark Complete' }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Completed Appointments -->
+    <div *ngIf="completedAppointments.length > 0" class="ch-appt-list__section">
+      <h2 class="ch-appt-list__section-title">Completed</h2>
+      <div class="ch-appt-list__cards">
+        <div
+          *ngFor="let apt of completedAppointments"
+          class="ch-appt-list__card ch-appt-list__card--completed ch-card"
+        >
+          <div class="ch-appt-list__card-header">
+            <div class="ch-appt-list__card-icon ch-appt-list__card-icon--completed">
+              <mat-icon>task_alt</mat-icon>
+            </div>
+            <div class="ch-appt-list__card-info">
+              <span class="ch-appt-list__card-service">{{ apt.serviceRequest?.serviceType }}</span>
+              <span class="ch-appt-list__card-customer">
+                {{ apt.serviceRequest?.customer?.firstName }} {{ apt.serviceRequest?.customer?.lastName }}
+              </span>
+            </div>
+            <app-badge [status]="apt.status"></app-badge>
+          </div>
+
+          <div class="ch-appt-list__card-details">
+            <span class="ch-appt-list__detail">
+              <mat-icon>calendar_today</mat-icon>
+              {{ formatDate(apt.scheduledStart) }}
+            </span>
+            <span class="ch-appt-list__detail" *ngIf="apt.completedAt">
+              <mat-icon>check</mat-icon>
+              Completed {{ formatDate(apt.completedAt) }}
+            </span>
+          </div>
+
+          <div class="ch-appt-list__card-notes" *ngIf="apt.completionNotes">
+            <mat-icon>sticky_note_2</mat-icon>
+            {{ apt.completionNotes }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Other Statuses (CANCELLED / NO_SHOW) -->
+    <div *ngIf="otherAppointments.length > 0" class="ch-appt-list__section">
+      <h2 class="ch-appt-list__section-title">Other</h2>
+      <div class="ch-appt-list__cards">
+        <div
+          *ngFor="let apt of otherAppointments"
+          class="ch-appt-list__card ch-appt-list__card--other ch-card"
+        >
+          <div class="ch-appt-list__card-header">
+            <div class="ch-appt-list__card-icon ch-appt-list__card-icon--other">
+              <mat-icon>event_busy</mat-icon>
+            </div>
+            <div class="ch-appt-list__card-info">
+              <span class="ch-appt-list__card-service">{{ apt.serviceRequest?.serviceType }}</span>
+              <span class="ch-appt-list__card-customer">
+                {{ apt.serviceRequest?.customer?.firstName }} {{ apt.serviceRequest?.customer?.lastName }}
+              </span>
+            </div>
+            <app-badge [status]="apt.status"></app-badge>
+          </div>
+
+          <div class="ch-appt-list__card-details">
+            <span class="ch-appt-list__detail">
+              <mat-icon>calendar_today</mat-icon>
+              {{ formatDate(apt.scheduledStart) }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -29,6 +29,6 @@ public class Availability {
     @Column(nullable = false)
     private LocalTime endTime;
 
-    @Column(nullable = false)
-    private boolean isEmergencyAvailable = false;
+    @Column(name = "is_emergency_available", nullable = false)
+    private boolean emergencyAvailable = false;
 }

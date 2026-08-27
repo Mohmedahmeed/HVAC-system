@@ -11,9 +11,16 @@ import { ContractorLayoutComponent } from './core/layouts/contractor-layout/cont
 import { AdminLayoutComponent } from './core/layouts/admin-layout/admin-layout.component';
 
 import { CustomerDashboardPlaceholderComponent } from './components/placeholders/customer-dashboard-placeholder/customer-dashboard-placeholder.component';
-import { ContractorDashboardPlaceholderComponent } from './components/placeholders/contractor-dashboard-placeholder/contractor-dashboard-placeholder.component';
 import { AdminDashboardPlaceholderComponent } from './components/placeholders/admin-dashboard-placeholder/admin-dashboard-placeholder.component';
 import { NewRequestComponent } from './components/customer/new-request/new-request.component';
+
+import { ContractorDashboardComponent } from './components/contractor/contractor-dashboard/contractor-dashboard.component';
+import { LeadInboxComponent } from './components/contractor/lead-inbox/lead-inbox.component';
+import { LeadDetailComponent } from './components/contractor/lead-detail/lead-detail.component';
+import { AppointmentListComponent } from './components/contractor/appointment-list/appointment-list.component';
+import { ContractorProfileComponent } from './components/contractor/contractor-profile/contractor-profile.component';
+import { ServiceAreasComponent } from './components/contractor/service-areas/service-areas.component';
+import { AvailabilityComponent } from './components/contractor/availability/availability.component';
 
 import { AuthGuard } from './core/guards/auth.guard';
 import { RoleGuard } from './core/guards/role.guard';
@@ -49,7 +56,13 @@ const routes: Routes = [
     data: { role: 'CONTRACTOR' },
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-      { path: 'dashboard', component: ContractorDashboardPlaceholderComponent },
+      { path: 'dashboard', component: ContractorDashboardComponent },
+      { path: 'leads', component: LeadInboxComponent },
+      { path: 'leads/:id', component: LeadDetailComponent },
+      { path: 'appointments', component: AppointmentListComponent },
+      { path: 'profile', component: ContractorProfileComponent },
+      { path: 'service-areas', component: ServiceAreasComponent },
+      { path: 'availability', component: AvailabilityComponent },
     ],
   },
 

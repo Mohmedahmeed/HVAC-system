@@ -7,6 +7,8 @@ export interface ConfirmDialogData {
   confirmText?: string;
   cancelText?: string;
   type?: 'danger' | 'warning' | 'info';
+  showReasonInput?: boolean;
+  reasonLabel?: string;
 }
 
 @Component({
@@ -15,6 +17,8 @@ export interface ConfirmDialogData {
   styleUrls: ['./confirm-dialog.component.css'],
 })
 export class ConfirmDialogComponent {
+  reason = '';
+
   constructor(
     public dialogRef: MatDialogRef<ConfirmDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: ConfirmDialogData
@@ -26,7 +30,11 @@ export class ConfirmDialogComponent {
   }
 
   confirm(): void {
-    this.dialogRef.close(true);
+    if (this.data.showReasonInput) {
+      this.dialogRef.close({ confirmed: true, reason: this.reason });
+    } else {
+      this.dialogRef.close(true);
+    }
   }
 
   cancel(): void {

@@ -65,8 +65,7 @@ public class AvailabilityService {
             availability.setStartTime(availabilityDetails.getStartTime());
         if (availabilityDetails.getEndTime() != null)
             availability.setEndTime(availabilityDetails.getEndTime());
-        if (availabilityDetails.isEmergencyAvailable())
-            availability.setEmergencyAvailable(true);
+        availability.setEmergencyAvailable(availabilityDetails.isEmergencyAvailable());
         
         return availabilityRepository.save(availability);
     }

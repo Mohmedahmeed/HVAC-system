@@ -2,6 +2,10 @@
 
 <div mat-dialog-content>
   <p>{{ data.message }}</p>
+  <mat-form-field *ngIf="data.showReasonInput" appearance="outline" class="ch-dialog-reason-field">
+    <mat-label>{{ data.reasonLabel || 'Reason' }}</mat-label>
+    <textarea matInput [(ngModel)]="reason" rows="3"></textarea>
+  </mat-form-field>
 </div>
 
 <div mat-dialog-actions align="end">

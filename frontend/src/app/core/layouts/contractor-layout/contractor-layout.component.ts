@@ -17,16 +17,16 @@ export class ContractorLayoutComponent implements OnInit, OnDestroy {
 
   navItems = [
     { label: 'Dashboard', route: '/contractor/dashboard', icon: 'dashboard' },
-    { label: 'Leads', route: '/contractor/leads', icon: 'work', disabled: true },
-    { label: 'Appointments', route: '/contractor/appointments', icon: 'event', disabled: true },
+    { label: 'My Leads', route: '/contractor/leads', icon: 'work' },
+    { label: 'Appointments', route: '/contractor/appointments', icon: 'event' },
     { label: 'Portfolio', route: '/contractor/portfolio', icon: 'photo_library', disabled: true },
     { label: 'Reviews', route: '/contractor/reviews', icon: 'star', disabled: true },
   ];
 
   settingsItems = [
-    { label: 'Profile', route: '/contractor/profile', icon: 'person', disabled: true },
-    { label: 'Service Areas', route: '/contractor/service-areas', icon: 'location_on', disabled: true },
-    { label: 'Availability', route: '/contractor/availability', icon: 'schedule', disabled: true },
+    { label: 'Profile', route: '/contractor/profile', icon: 'person', disabled: false },
+    { label: 'Service Areas', route: '/contractor/service-areas', icon: 'location_on', disabled: false },
+    { label: 'Availability', route: '/contractor/availability', icon: 'schedule', disabled: false },
   ];
 
   constructor(private breakpointObserver: BreakpointObserver) {}

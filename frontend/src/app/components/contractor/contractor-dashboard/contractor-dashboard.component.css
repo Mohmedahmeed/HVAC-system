@@ -1,0 +1,347 @@
+/* ═══════════════════════════════════════════════════════════════
+   Contractor Dashboard
+   ═══════════════════════════════════════════════════════════════ */
+
+.ch-dashboard__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: var(--ch-space-8);
+  gap: var(--ch-space-4);
+}
+
+.ch-dashboard__title {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--ch-text);
+  margin: 0;
+  line-height: 1.3;
+}
+
+.ch-dashboard__subtitle {
+  font-size: 16px;
+  color: var(--ch-text-secondary);
+  margin: var(--ch-space-1) 0 0;
+}
+
+.ch-dashboard__cta {
+  flex-shrink: 0;
+}
+
+/* ─── KPI Cards ──────────────────────────────────────────────── */
+
+.ch-dashboard__kpis {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--ch-space-4);
+  margin-bottom: var(--ch-space-8);
+}
+
+.ch-dashboard__kpi {
+  display: flex;
+  align-items: center;
+  gap: var(--ch-space-4);
+  padding: var(--ch-space-5);
+}
+
+.ch-dashboard__kpi-skeleton {
+  padding: var(--ch-space-5);
+}
+
+.ch-dashboard__kpi-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--ch-radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.ch-dashboard__kpi-icon--primary {
+  background: var(--ch-primary-light);
+  color: var(--ch-primary);
+}
+
+.ch-dashboard__kpi-icon--accent {
+  background: var(--ch-accent-light);
+  color: var(--ch-accent);
+}
+
+.ch-dashboard__kpi-icon--success {
+  background: var(--ch-success-light);
+  color: var(--ch-success);
+}
+
+.ch-dashboard__kpi-icon--info {
+  background: var(--ch-info-light);
+  color: var(--ch-info);
+}
+
+.ch-dashboard__kpi-data {
+  display: flex;
+  flex-direction: column;
+}
+
+.ch-dashboard__kpi-value {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--ch-text);
+  line-height: 1.2;
+}
+
+.ch-dashboard__kpi-label {
+  font-size: 13px;
+  color: var(--ch-text-secondary);
+  margin-top: 2px;
+}
+
+/* ─── Sections ───────────────────────────────────────────────── */
+
+.ch-dashboard__section {
+  margin-bottom: var(--ch-space-6);
+}
+
+.ch-dashboard__section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--ch-space-4);
+}
+
+.ch-dashboard__section-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--ch-text);
+  margin: 0;
+}
+
+/* ─── Lead List ──────────────────────────────────────────────── */
+
+.ch-dashboard__lead-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.ch-dashboard__lead-row {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ch-space-2);
+  padding: var(--ch-space-4);
+  border-bottom: 1px solid var(--ch-divider);
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+  border-radius: var(--ch-radius);
+}
+
+.ch-dashboard__lead-row:last-child {
+  border-bottom: none;
+}
+
+.ch-dashboard__lead-row:hover {
+  background: var(--ch-bg);
+}
+
+.ch-dashboard__lead-row:focus-visible {
+  outline: 2px solid var(--ch-primary);
+  outline-offset: -2px;
+}
+
+.ch-dashboard__lead-main {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--ch-space-4);
+}
+
+.ch-dashboard__lead-info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.ch-dashboard__lead-type {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ch-text);
+}
+
+.ch-dashboard__lead-desc {
+  font-size: 13px;
+  color: var(--ch-text-secondary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 500px;
+}
+
+.ch-dashboard__lead-meta {
+  display: flex;
+  gap: var(--ch-space-2);
+  flex-shrink: 0;
+}
+
+.ch-dashboard__lead-footer {
+  display: flex;
+  gap: var(--ch-space-4);
+  align-items: center;
+}
+
+.ch-dashboard__lead-date,
+.ch-dashboard__lead-zip,
+.ch-dashboard__lead-price {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+  color: var(--ch-text-muted);
+}
+
+.ch-dashboard__lead-date mat-icon,
+.ch-dashboard__lead-zip mat-icon,
+.ch-dashboard__lead-price mat-icon {
+  font-size: 16px;
+  width: 16px;
+  height: 16px;
+}
+
+.ch-dashboard__lead-price {
+  font-weight: 600;
+  color: var(--ch-success-text);
+}
+
+/* ─── Appointment List ───────────────────────────────────────── */
+
+.ch-dashboard__appointment-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.ch-dashboard__appointment-row {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--ch-space-4);
+  padding: var(--ch-space-4);
+  border-bottom: 1px solid var(--ch-divider);
+}
+
+.ch-dashboard__appointment-row:last-child {
+  border-bottom: none;
+}
+
+.ch-dashboard__apt-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--ch-radius);
+  background: var(--ch-primary-light);
+  color: var(--ch-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.ch-dashboard__apt-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.ch-dashboard__apt-service {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ch-text);
+}
+
+.ch-dashboard__apt-customer {
+  font-size: 13px;
+  color: var(--ch-text-secondary);
+}
+
+.ch-dashboard__apt-datetime {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+  color: var(--ch-text-muted);
+}
+
+.ch-dashboard__apt-datetime mat-icon {
+  font-size: 16px;
+  width: 16px;
+  height: 16px;
+}
+
+.ch-dashboard__apt-notes {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+  color: var(--ch-text-secondary);
+  font-style: italic;
+}
+
+.ch-dashboard__apt-notes mat-icon {
+  font-size: 16px;
+  width: 16px;
+  height: 16px;
+}
+
+.ch-dashboard__apt-status {
+  flex-shrink: 0;
+}
+
+/* ─── Quick Actions ──────────────────────────────────────────── */
+
+.ch-dashboard__actions {
+  display: flex;
+  gap: var(--ch-space-3);
+  margin-top: var(--ch-space-6);
+}
+
+.ch-dashboard__action-btn mat-icon {
+  margin-right: var(--ch-space-2);
+}
+
+/* ─── Responsive ─────────────────────────────────────────────── */
+
+@media (max-width: 1024px) {
+  .ch-dashboard__kpis {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .ch-dashboard__header {
+    flex-direction: column;
+  }
+
+  .ch-dashboard__kpis {
+    grid-template-columns: 1fr;
+  }
+
+  .ch-dashboard__lead-main {
+    flex-direction: column;
+  }
+
+  .ch-dashboard__lead-meta {
+    flex-direction: row;
+  }
+
+  .ch-dashboard__lead-desc {
+    max-width: none;
+  }
+
+  .ch-dashboard__appointment-row {
+    flex-direction: column;
+  }
+
+  .ch-dashboard__actions {
+    flex-direction: column;
+  }
+
+  .ch-dashboard__action-btn {
+    width: 100%;
+  }
+}

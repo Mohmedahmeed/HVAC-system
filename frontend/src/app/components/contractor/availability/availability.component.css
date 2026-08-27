@@ -1,0 +1,247 @@
+/* ═══════════════════════════════════════════════════════════════
+   Weekly Availability
+   ═══════════════════════════════════════════════════════════════ */
+
+.ch-avail__header {
+  margin-bottom: var(--ch-space-6);
+}
+
+.ch-avail__title {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--ch-text);
+  margin: 0;
+  line-height: 1.3;
+}
+
+.ch-avail__subtitle {
+  font-size: 16px;
+  color: var(--ch-text-secondary);
+  margin: var(--ch-space-1) 0 0;
+}
+
+/* ─── Day Cards ──────────────────────────────────────────────── */
+
+.ch-avail__cards {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ch-space-4);
+  margin-bottom: var(--ch-space-6);
+}
+
+.ch-avail__day-skeleton {
+  padding: var(--ch-space-5);
+}
+
+.ch-avail__day-card {
+  padding: var(--ch-space-5);
+  transition: border-color 0.15s ease;
+}
+
+.ch-avail__day-card--unsaved {
+  border: 2px dashed var(--ch-primary-light);
+}
+
+.ch-avail__day-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--ch-space-4);
+}
+
+.ch-avail__day-name {
+  display: flex;
+  align-items: center;
+  gap: var(--ch-space-2);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--ch-text);
+}
+
+.ch-avail__new-badge {
+  color: var(--ch-primary);
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+}
+
+.ch-avail__day-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--ch-space-3);
+}
+
+.ch-avail__emergency-toggle {
+  font-size: 13px;
+}
+
+.ch-avail__emergency-label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ch-text-secondary);
+}
+
+.ch-avail__delete-btn {
+  color: var(--ch-text-muted);
+}
+
+.ch-avail__delete-btn:hover {
+  color: var(--ch-error);
+}
+
+/* ─── Time Row ───────────────────────────────────────────────── */
+
+.ch-avail__time-row {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--ch-space-3);
+}
+
+.ch-avail__time-field {
+  display: flex;
+  flex-direction: column;
+}
+
+.ch-avail__time-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--ch-text-secondary);
+  margin-bottom: var(--ch-space-1);
+}
+
+.ch-avail__time-input {
+  padding: var(--ch-space-2) var(--ch-space-3);
+  border: 1px solid var(--ch-border);
+  border-radius: var(--ch-radius);
+  font-size: 15px;
+  font-family: inherit;
+  color: var(--ch-text);
+  background: var(--ch-surface);
+  min-width: 140px;
+  height: 40px;
+}
+
+.ch-avail__time-input:focus {
+  outline: 2px solid var(--ch-primary);
+  outline-offset: -1px;
+  border-color: var(--ch-primary);
+}
+
+.ch-avail__time-input:disabled {
+  opacity: 0.5;
+  background: var(--ch-divider);
+}
+
+.ch-avail__time-separator {
+  font-size: 14px;
+  color: var(--ch-text-muted);
+  padding-bottom: var(--ch-space-2);
+}
+
+.ch-avail__save-wrapper {
+  padding-bottom: 1px;
+}
+
+.ch-avail__save-btn {
+  min-width: 90px;
+}
+
+.ch-avail__spinner {
+  display: inline-block;
+}
+
+.ch-avail__time-error {
+  display: flex;
+  align-items: center;
+  gap: var(--ch-space-1);
+  font-size: 13px;
+  color: var(--ch-error);
+  margin-top: var(--ch-space-2);
+}
+
+.ch-avail__time-error mat-icon {
+  font-size: 16px;
+  width: 16px;
+  height: 16px;
+}
+
+/* ─── Add Section ────────────────────────────────────────────── */
+
+.ch-avail__add-section {
+  margin-bottom: var(--ch-space-6);
+}
+
+.ch-avail__add-section button mat-icon {
+  margin-right: var(--ch-space-1);
+}
+
+.ch-avail__add-form {
+  padding: var(--ch-space-5);
+  margin-bottom: var(--ch-space-6);
+}
+
+.ch-avail__add-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--ch-text);
+  margin: 0 0 var(--ch-space-4);
+}
+
+.ch-avail__add-row {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--ch-space-3);
+}
+
+.ch-avail__day-select {
+  width: 200px;
+}
+
+/* ─── Responsive ─────────────────────────────────────────────── */
+
+@media (max-width: 640px) {
+  .ch-avail__day-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--ch-space-3);
+  }
+
+  .ch-avail__day-actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .ch-avail__time-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .ch-avail__time-input {
+    min-width: unset;
+    width: 100%;
+  }
+
+  .ch-avail__time-separator {
+    display: none;
+  }
+
+  .ch-avail__save-wrapper {
+    padding-top: var(--ch-space-2);
+  }
+
+  .ch-avail__save-btn {
+    width: 100%;
+  }
+
+  .ch-avail__add-row {
+    flex-direction: column;
+  }
+
+  .ch-avail__day-select {
+    width: 100%;
+  }
+
+  .ch-avail__add-row button {
+    width: 100%;
+  }
+}

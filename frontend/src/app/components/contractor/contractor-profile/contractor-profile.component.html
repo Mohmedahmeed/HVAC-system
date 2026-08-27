@@ -1,0 +1,199 @@
+<!-- ═══════════════════════════════════════════════════════════════
+     Contractor Profile
+     ═══════════════════════════════════════════════════════════════ -->
+
+<!-- ─── Loading State ────────────────────────────────────────── -->
+<div *ngIf="isLoading" class="ch-container ch-profile">
+  <div class="ch-profile__header">
+    <app-skeleton variant="text"></app-skeleton>
+  </div>
+  <div class="ch-card ch-profile__section">
+    <app-skeleton variant="card"></app-skeleton>
+  </div>
+  <div class="ch-card ch-profile__section">
+    <app-skeleton variant="card"></app-skeleton>
+  </div>
+</div>
+
+<!-- ─── Error State ─────────────────────────────────────────── -->
+<div *ngIf="!isLoading && hasError" class="ch-container ch-profile">
+  <div class="ch-profile__header">
+    <h1 class="ch-profile__title">Business Profile</h1>
+  </div>
+  <app-alert type="error" [message]="errorMessage" (dismiss)="loadProfile()"></app-alert>
+  <div style="text-align: center; margin-top: var(--ch-space-6);">
+    <button mat-stroked-button color="primary" (click)="loadProfile()">Try Again</button>
+  </div>
+</div>
+
+<!-- ─── Success State ───────────────────────────────────────── -->
+<div *ngIf="!isLoading && !hasError" class="ch-container ch-profile">
+
+  <!-- Header -->
+  <div class="ch-profile__header">
+    <div>
+      <h1 class="ch-profile__title">Business Profile</h1>
+      <p class="ch-profile__subtitle">Manage your business information that customers see.</p>
+    </div>
+  </div>
+
+  <!-- Alerts -->
+  <app-alert *ngIf="successMessage" type="success" [message]="successMessage" [dismissible]="true" (dismiss)="successMessage = ''"></app-alert>
+  <app-alert *ngIf="errorMessage && !successMessage" type="error" [message]="errorMessage" [dismissible]="true" (dismiss)="errorMessage = ''"></app-alert>
+
+  <form [formGroup]="profileForm" (ngSubmit)="onSave()">
+
+    <!-- Business Identity -->
+    <div class="ch-card ch-profile__section">
+      <div class="ch-profile__section-header">
+        <mat-icon class="ch-profile__section-icon">business</mat-icon>
+        <div>
+          <h2 class="ch-profile__section-title">Business Identity</h2>
+          <p class="ch-profile__section-desc">Basic information about your HVAC business.</p>
+        </div>
+      </div>
+
+      <div class="ch-profile__field">
+        <mat-form-field appearance="outline" class="ch-profile__input">
+          <mat-label>Business Name</mat-label>
+          <input matInput formControlName="businessName" placeholder="e.g. Cool Air Solutions" />
+          <mat-hint *ngIf="profileForm.get('businessName')?.touched && profileForm.get('businessName')?.invalid">
+            Business name is required (2-100 characters).
+          </mat-hint>
+        </mat-form-field>
+      </div>
+
+      <div class="ch-profile__field">
+        <mat-form-field appearance="outline" class="ch-profile__input ch-profile__input--full">
+          <mat-label>Description</mat-label>
+          <textarea matInput formControlName="description" rows="3" placeholder="Describe your business and experience..."></textarea>
+          <mat-hint align="end">{{ (profileForm.get('description')?.value || '').length }} / 500</mat-hint>
+        </mat-form-field>
+      </div>
+
+      <div class="ch-profile__field-row">
+        <div class="ch-profile__field">
+          <mat-form-field appearance="outline" class="ch-profile__input">
+            <mat-label>License Number</mat-label>
+            <input matInput formControlName="licenseNumber" placeholder="e.g. AZ-ROC-123456" />
+          </mat-form-field>
+        </div>
+        <div class="ch-profile__field">
+          <mat-form-field appearance="outline" class="ch-profile__input">
+            <mat-label>Logo URL</mat-label>
+            <input matInput formControlName="logoUrl" placeholder="https://..." />
+          </mat-form-field>
+        </div>
+      </div>
+
+      <!-- Verification & Rating (read-only) -->
+      <div *ngIf="serverProfile" class="ch-profile__meta">
+        <div class="ch-profile__meta-item" *ngIf="serverProfile.verified">
+          <mat-icon class="ch-profile__meta-icon ch-profile__meta-icon--verified">verified</mat-icon>
+          <span class="ch-profile__meta-label">Verified Contractor</span>
+        </div>
+        <div class="ch-profile__meta-item" *ngIf="!serverProfile.verified">
+          <mat-icon class="ch-profile__meta-icon ch-profile__meta-icon--unverified">info</mat-icon>
+          <span class="ch-profile__meta-label ch-profile__meta-label--muted">Not Verified</span>
+        </div>
+        <div class="ch-profile__meta-item" *ngIf="serverProfile.totalReviews > 0">
+          <mat-icon class="ch-profile__meta-icon ch-profile__meta-icon--rating">star</mat-icon>
+          <span class="ch-profile__meta-label">{{ serverProfile.averageRating | number:'1.1-1' }} ({{ serverProfile.totalReviews }} {{ serverProfile.totalReviews === 1 ? 'review' : 'reviews' }})</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Services & Rates -->
+    <div class="ch-card ch-profile__section">
+      <div class="ch-profile__section-header">
+        <mat-icon class="ch-profile__section-icon">build</mat-icon>
+        <div>
+          <h2 class="ch-profile__section-title">Services & Rates</h2>
+          <p class="ch-profile__section-desc">Select the services you offer and set your pricing.</p>
+        </div>
+      </div>
+
+      <div class="ch-profile__field">
+        <label class="ch-profile__label">Specialties</label>
+        <div class="ch-profile__specialties">
+          <button
+            *ngFor="let spec of specialties"
+            type="button"
+            class="ch-profile__specialty-chip"
+            [class.ch-profile__specialty-chip--active]="isSpecialtyChecked(spec.value)"
+            (click)="toggleSpecialty(spec.value)"
+          >
+            <mat-icon *ngIf="isSpecialtyChecked(spec.value)">check</mat-icon>
+            {{ spec.label }}
+          </button>
+        </div>
+        <mat-hint *ngIf="profileForm.get('specialties')?.touched && profileForm.get('specialties')?.value?.length === 0">
+          Please select at least one specialty.
+        </mat-hint>
+      </div>
+
+      <div class="ch-profile__field-row">
+        <div class="ch-profile__field">
+          <mat-form-field appearance="outline" class="ch-profile__input">
+            <mat-label>Base Rate ($/hr)</mat-label>
+            <input matInput type="number" formControlName="baseRate" placeholder="e.g. 85" />
+            <span matPrefix>$&nbsp;</span>
+            <span matSuffix>/hr</span>
+          </mat-form-field>
+        </div>
+        <div class="ch-profile__field">
+          <mat-form-field appearance="outline" class="ch-profile__input">
+            <mat-label>Response Time (hours)</mat-label>
+            <input matInput type="number" formControlName="responseTimeHours" placeholder="e.g. 2" />
+            <span matSuffix>hrs</span>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+
+    <!-- Emergency Availability -->
+    <div class="ch-card ch-profile__section">
+      <div class="ch-profile__section-header">
+        <mat-icon class="ch-profile__section-icon">emergency</mat-icon>
+        <div>
+          <h2 class="ch-profile__section-title">Emergency Service</h2>
+          <p class="ch-profile__section-desc">Indicate whether you accept emergency calls outside regular hours.</p>
+        </div>
+      </div>
+
+      <div class="ch-profile__emergency-row">
+        <div class="ch-profile__emergency-info">
+          <span class="ch-profile__emergency-label">Accepts Emergency Calls</span>
+          <span class="ch-profile__emergency-desc">Customers with urgent needs can contact you directly.</span>
+        </div>
+        <mat-slide-toggle formControlName="acceptsEmergency" color="primary" [disabled]="true"></mat-slide-toggle>
+      </div>
+      <div class="ch-profile__emergency-note">
+        <mat-icon class="ch-profile__emergency-note-icon">info</mat-icon>
+        <span>Managed in Availability under Emergency — this setting cannot be changed here.</span>
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="ch-profile__actions">
+      <button
+        mat-stroked-button
+        type="button"
+        color="primary"
+        (click)="onReset()"
+        [disabled]="isSaving"
+      >
+        Reset
+      </button>
+      <button
+        mat-flat-button
+        type="submit"
+        color="primary"
+        [disabled]="profileForm.invalid || isSaving"
+      >
+        <mat-spinner *ngIf="isSaving" diameter="20" class="ch-profile__spinner"></mat-spinner>
+        <span *ngIf="!isSaving">Save Changes</span>
+      </button>
+    </div>
+  </form>
+</div>

@@ -29,9 +29,19 @@ import { TopBarComponent } from './components/top-bar/top-bar.component';
 
 // ─── Placeholders ───────────────────────────────────────────
 import { CustomerDashboardPlaceholderComponent } from './components/placeholders/customer-dashboard-placeholder/customer-dashboard-placeholder.component';
-import { ContractorDashboardPlaceholderComponent } from './components/placeholders/contractor-dashboard-placeholder/contractor-dashboard-placeholder.component';
 import { AdminDashboardPlaceholderComponent } from './components/placeholders/admin-dashboard-placeholder/admin-dashboard-placeholder.component';
 import { NewRequestComponent } from './components/customer/new-request/new-request.component';
+
+// ─── Contractor (F4) ───────────────────────────────────────
+import { ContractorDashboardComponent } from './components/contractor/contractor-dashboard/contractor-dashboard.component';
+import { LeadInboxComponent } from './components/contractor/lead-inbox/lead-inbox.component';
+import { LeadDetailComponent } from './components/contractor/lead-detail/lead-detail.component';
+import { AppointmentListComponent } from './components/contractor/appointment-list/appointment-list.component';
+
+// ─── Contractor Settings (F5) ─────────────────────────────
+import { ContractorProfileComponent } from './components/contractor/contractor-profile/contractor-profile.component';
+import { ServiceAreasComponent } from './components/contractor/service-areas/service-areas.component';
+import { AvailabilityComponent } from './components/contractor/availability/availability.component';
 
 // ─── Legacy (kept temporarily — files not yet deleted) ──────
 import { NavComponent } from './components/nav/nav.component';
@@ -54,9 +64,17 @@ import { ProfileComponent } from './components/profile/profile.component';
     TopBarComponent,
     // Placeholders
     CustomerDashboardPlaceholderComponent,
-    ContractorDashboardPlaceholderComponent,
     AdminDashboardPlaceholderComponent,
     NewRequestComponent,
+    // Contractor (F4)
+    ContractorDashboardComponent,
+    LeadInboxComponent,
+    LeadDetailComponent,
+    AppointmentListComponent,
+    // Contractor Settings (F5)
+    ContractorProfileComponent,
+    ServiceAreasComponent,
+    AvailabilityComponent,
     // Legacy (kept temporarily)
     NavComponent,
     FooterComponent,
