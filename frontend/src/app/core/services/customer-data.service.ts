@@ -37,4 +37,10 @@ export class CustomerDataService {
   getServiceRequest(id: number): Observable<ServiceRequest> {
     return this.http.get<ServiceRequest>(`${this.apiUrl}/service-requests/${id}`);
   }
+
+  cancelServiceRequest(id: number): Observable<ServiceRequest> {
+    return this.http.put<ServiceRequest>(`${this.apiUrl}/service-requests/${id}`, {
+      status: 'CANCELLED',
+    });
+  }
 }

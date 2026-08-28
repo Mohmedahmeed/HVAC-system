@@ -82,6 +82,15 @@
   <div class="ch-card ch-dashboard__section">
     <div class="ch-dashboard__section-header">
       <h2 class="ch-dashboard__section-title">Recent Service Requests</h2>
+      <button
+        mat-button
+        color="primary"
+        class="ch-dashboard__view-all"
+        (click)="onViewRequests()"
+      >
+        View all
+        <mat-icon>chevron_right</mat-icon>
+      </button>
     </div>
 
     <app-empty-state
@@ -96,6 +105,11 @@
       <div
         *ngFor="let req of recentRequests"
         class="ch-dashboard__request-row"
+        role="button"
+        tabindex="0"
+        [attr.aria-label]="'View ' + req.serviceType + ' request'"
+        (click)="onOpenRequest(req.id)"
+        (keydown.enter)="onOpenRequest(req.id)"
       >
         <div class="ch-dashboard__request-main">
           <div class="ch-dashboard__request-info">

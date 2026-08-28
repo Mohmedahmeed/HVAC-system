@@ -1,0 +1,237 @@
+/* ═══════════════════════════════════════════════════════════════
+   My Service Requests
+   ═══════════════════════════════════════════════════════════════ */
+
+.ch-request-list {
+  padding-top: var(--ch-space-8);
+  padding-bottom: var(--ch-space-12);
+}
+
+/* ─── Header ────────────────────────────────────────────────── */
+
+.ch-request-list__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: var(--ch-space-6);
+  gap: var(--ch-space-4);
+}
+
+.ch-request-list__heading {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ch-space-1);
+}
+
+.ch-request-list__title {
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--ch-text);
+  margin: 0;
+  line-height: 1.3;
+}
+
+.ch-request-list__subtitle {
+  font-size: 15px;
+  color: var(--ch-text-secondary);
+  margin: 0;
+}
+
+.ch-request-list__cta {
+  flex-shrink: 0;
+}
+
+.ch-request-list__cta mat-icon {
+  margin-right: var(--ch-space-2);
+}
+
+/* ─── Filter Tabs ───────────────────────────────────────────── */
+
+.ch-request-list__tabs {
+  display: flex;
+  gap: var(--ch-space-2);
+  margin-bottom: var(--ch-space-6);
+  flex-wrap: wrap;
+}
+
+.ch-request-list__tab {
+  border: 1px solid var(--ch-divider);
+  background: var(--ch-surface);
+  color: var(--ch-text-secondary);
+  font-size: 14px;
+  font-weight: 500;
+  padding: var(--ch-space-2) var(--ch-space-4);
+  border-radius: var(--ch-radius-full);
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.ch-request-list__tab:hover {
+  background: var(--ch-primary-light);
+  color: var(--ch-primary);
+}
+
+.ch-request-list__tab--active {
+  background: var(--ch-primary);
+  border-color: var(--ch-primary);
+  color: var(--ch-text-inverse);
+}
+
+/* ─── List ──────────────────────────────────────────────────── */
+
+.ch-request-list__list {
+  padding: var(--ch-space-2) var(--ch-space-6);
+  display: flex;
+  flex-direction: column;
+}
+
+.ch-request-list__row {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ch-space-2);
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: none;
+  padding: var(--ch-space-4) 0;
+  border-bottom: 1px solid var(--ch-divider);
+  cursor: pointer;
+  border-radius: var(--ch-radius);
+  color: inherit;
+  font-family: inherit;
+}
+
+.ch-request-list__row:last-child {
+  border-bottom: none;
+}
+
+.ch-request-list__row:first-child {
+  padding-top: 0;
+}
+
+.ch-request-list__row:hover {
+  background: var(--ch-divider);
+}
+
+.ch-request-list__row:focus-visible {
+  outline: 2px solid var(--ch-primary);
+  outline-offset: 2px;
+}
+
+.ch-request-list__main {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--ch-space-4);
+}
+
+.ch-request-list__info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ch-space-1);
+  min-width: 0;
+  flex: 1;
+}
+
+.ch-request-list__type {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ch-text);
+}
+
+.ch-request-list__desc {
+  font-size: 13px;
+  color: var(--ch-text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 480px;
+}
+
+.ch-request-list__meta {
+  display: flex;
+  align-items: center;
+  gap: var(--ch-space-2);
+  flex-shrink: 0;
+}
+
+.ch-request-list__footer {
+  display: flex;
+  align-items: center;
+  gap: var(--ch-space-4);
+}
+
+.ch-request-list__date,
+.ch-request-list__zip {
+  display: flex;
+  align-items: center;
+  gap: var(--ch-space-1);
+  font-size: 13px;
+  color: var(--ch-text-muted);
+}
+
+.ch-request-list__date mat-icon,
+.ch-request-list__zip mat-icon {
+  font-size: 16px;
+  width: 16px;
+  height: 16px;
+}
+
+.ch-request-list__chevron {
+  margin-left: auto;
+  color: var(--ch-text-muted);
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+}
+
+.ch-request-list__empty {
+  display: block;
+}
+
+.ch-request-list__retry {
+  text-align: center;
+  margin-top: var(--ch-space-6);
+}
+
+.ch-request-list__retry mat-icon {
+  margin-right: var(--ch-space-1);
+}
+
+/* ─── Skeleton ──────────────────────────────────────────────── */
+
+.ch-request-list__skeleton-card {
+  padding: var(--ch-space-6);
+  margin-bottom: var(--ch-space-4);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   Responsive
+   ═══════════════════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+  .ch-request-list__header {
+    flex-direction: column;
+  }
+
+  .ch-request-list__cta {
+    width: 100%;
+  }
+
+  .ch-request-list__main {
+    flex-direction: column;
+    gap: var(--ch-space-2);
+  }
+
+  .ch-request-list__desc {
+    max-width: none;
+  }
+
+  .ch-request-list__list {
+    padding: var(--ch-space-2) var(--ch-space-4);
+  }
+
+  .ch-request-list__title {
+    font-size: 22px;
+  }
+}

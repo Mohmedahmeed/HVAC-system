@@ -1,0 +1,112 @@
+<!-- ═══════════════════════════════════════════════════════════════
+     My Service Requests
+     ═══════════════════════════════════════════════════════════════ -->
+
+<!-- ─── Loading State ────────────────────────────────────────── -->
+<div *ngIf="isLoading" class="ch-container ch-request-list">
+  <div class="ch-request-list__header">
+    <div class="ch-request-list__heading">
+      <app-skeleton variant="text"></app-skeleton>
+    </div>
+  </div>
+  <div class="ch-card ch-request-list__skeleton-card" *ngFor="let i of [1,2,3]">
+    <app-skeleton variant="card"></app-skeleton>
+  </div>
+</div>
+
+<!-- ─── Error State ─────────────────────────────────────────── -->
+<div *ngIf="!isLoading && hasError" class="ch-container ch-request-list">
+  <app-alert type="error" [message]="errorMessage" (dismiss)="onRetry()"></app-alert>
+  <div class="ch-request-list__retry">
+    <button mat-stroked-button color="primary" (click)="onRetry()">
+      <mat-icon>refresh</mat-icon>
+      Retry
+    </button>
+  </div>
+</div>
+
+<!-- ─── Success State ───────────────────────────────────────── -->
+<div *ngIf="!isLoading && !hasError" class="ch-container ch-request-list">
+
+  <!-- Header -->
+  <div class="ch-request-list__header">
+    <div class="ch-request-list__heading">
+      <h1 class="ch-request-list__title">My Requests</h1>
+      <p class="ch-request-list__subtitle">
+        Track the status of your HVAC service requests.
+      </p>
+    </div>
+    <button
+      mat-flat-button
+      color="primary"
+      class="ch-request-list__cta"
+      (click)="onRequestService()"
+    >
+      <mat-icon>add</mat-icon>
+      Request HVAC Service
+    </button>
+  </div>
+
+  <!-- Filter Tabs -->
+  <div class="ch-request-list__tabs" role="tablist" aria-label="Filter requests">
+    <button
+      *ngFor="let tab of filterTabs"
+      class="ch-request-list__tab"
+      [class.ch-request-list__tab--active]="filterTab === tab.value"
+      (click)="setFilter(tab.value)"
+      role="tab"
+      [attr.aria-selected]="filterTab === tab.value"
+    >
+      {{ tab.label }}
+    </button>
+  </div>
+
+  <!-- Empty State -->
+  <app-empty-state
+    *ngIf="requests.length === 0"
+    icon="description"
+    message="No service requests yet"
+    actionText="Request HVAC Service"
+    (actionClick)="onRequestService()"
+    class="ch-request-list__empty"
+  ></app-empty-state>
+
+  <app-empty-state
+    *ngIf="requests.length > 0 && filteredRequests.length === 0"
+    icon="filter_alt_off"
+    message="No {{ filterTab }} requests found"
+  ></app-empty-state>
+
+  <!-- Request List -->
+  <div *ngIf="filteredRequests.length > 0" class="ch-card ch-request-list__list">
+    <button
+      *ngFor="let req of filteredRequests"
+      class="ch-request-list__row"
+      (click)="onOpenRequest(req.id)"
+      (keydown.enter)="onOpenRequest(req.id)"
+      [attr.aria-label]="'View ' + formatServiceType(req.serviceType) + ' request'"
+    >
+      <span class="ch-request-list__main">
+        <span class="ch-request-list__info">
+          <span class="ch-request-list__type">{{ formatServiceType(req.serviceType) }}</span>
+          <span class="ch-request-list__desc">{{ req.problemDescription }}</span>
+        </span>
+        <span class="ch-request-list__meta">
+          <app-badge [status]="req.status"></app-badge>
+          <app-badge [status]="req.urgency"></app-badge>
+        </span>
+      </span>
+      <span class="ch-request-list__footer">
+        <span class="ch-request-list__date">
+          <mat-icon>schedule</mat-icon>
+          {{ formatDate(req.createdAt) }}
+        </span>
+        <span class="ch-request-list__zip" *ngIf="req.zipCode">
+          <mat-icon>location_on</mat-icon>
+          {{ req.zipCode }}
+        </span>
+        <mat-icon class="ch-request-list__chevron">chevron_right</mat-icon>
+      </span>
+    </button>
+  </div>
+</div>

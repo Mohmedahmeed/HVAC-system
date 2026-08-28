@@ -18,8 +18,8 @@ export class TopBarComponent implements OnInit, OnDestroy {
   private subscription = new Subscription();
 
   customerNavLinks = [
-    { label: 'Dashboard', route: '/customer/dashboard', icon: 'dashboard' },
-    { label: 'My Requests', route: '/customer/requests', icon: 'description', disabled: true },
+    { label: 'Dashboard', route: '/customer/dashboard', icon: 'dashboard', disabled: false },
+    { label: 'My Requests', route: '/customer/requests', icon: 'list_alt', disabled: false },
     { label: 'Appointments', route: '/customer/appointments', icon: 'event', disabled: true },
   ];
 

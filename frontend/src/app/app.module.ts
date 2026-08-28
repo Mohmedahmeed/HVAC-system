@@ -31,6 +31,8 @@ import { TopBarComponent } from './components/top-bar/top-bar.component';
 import { CustomerDashboardPlaceholderComponent } from './components/placeholders/customer-dashboard-placeholder/customer-dashboard-placeholder.component';
 import { AdminDashboardPlaceholderComponent } from './components/placeholders/admin-dashboard-placeholder/admin-dashboard-placeholder.component';
 import { NewRequestComponent } from './components/customer/new-request/new-request.component';
+import { RequestListComponent } from './components/customer/requests/request-list/request-list.component';
+import { RequestDetailComponent } from './components/customer/requests/request-detail/request-detail.component';
 
 // ─── Contractor (F4) ───────────────────────────────────────
 import { ContractorDashboardComponent } from './components/contractor/contractor-dashboard/contractor-dashboard.component';
@@ -66,6 +68,9 @@ import { ProfileComponent } from './components/profile/profile.component';
     CustomerDashboardPlaceholderComponent,
     AdminDashboardPlaceholderComponent,
     NewRequestComponent,
+    // Customer Requests (F6)
+    RequestListComponent,
+    RequestDetailComponent,
     // Contractor (F4)
     ContractorDashboardComponent,
     LeadInboxComponent,

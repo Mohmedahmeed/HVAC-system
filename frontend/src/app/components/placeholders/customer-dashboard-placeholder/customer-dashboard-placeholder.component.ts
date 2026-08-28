@@ -153,7 +153,11 @@ export class CustomerDashboardPlaceholderComponent implements OnInit, OnDestroy 
   }
 
   onViewRequests(): void {
-    // Route not yet implemented — placeholder action
+    this.router.navigate(['/customer/requests']);
+  }
+
+  onOpenRequest(id: number): void {
+    this.router.navigate(['/customer/requests', id]);
   }
 
   onRetry(): void {

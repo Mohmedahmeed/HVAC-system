@@ -129,6 +129,14 @@
   margin: 0;
 }
 
+.ch-dashboard__view-all {
+  margin-left: auto;
+}
+
+.ch-dashboard__view-all mat-icon {
+  margin-left: var(--ch-space-1);
+}
+
 /* ─── Request List ──────────────────────────────────────────── */
 
 .ch-dashboard__request-list {
@@ -139,6 +147,18 @@
 .ch-dashboard__request-row {
   padding: var(--ch-space-4) 0;
   border-bottom: 1px solid var(--ch-divider);
+  border-radius: var(--ch-radius);
+  cursor: pointer;
+  color: inherit;
+}
+
+.ch-dashboard__request-row:hover {
+  background: var(--ch-divider);
+}
+
+.ch-dashboard__request-row:focus-visible {
+  outline: 2px solid var(--ch-primary);
+  outline-offset: 2px;
 }
 
 .ch-dashboard__request-row:last-child {

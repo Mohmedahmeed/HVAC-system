@@ -1,0 +1,212 @@
+<!-- ═══════════════════════════════════════════════════════════════
+     Service Request Detail
+     ═══════════════════════════════════════════════════════════════ -->
+
+<!-- ─── Loading State ────────────────────────────────────────── -->
+<div *ngIf="isLoading" class="ch-container ch-request-detail">
+  <div class="ch-request-detail__loading-back">
+    <app-skeleton variant="text"></app-skeleton>
+  </div>
+  <div class="ch-card ch-request-detail__loading-card">
+    <app-skeleton variant="card"></app-skeleton>
+  </div>
+  <div class="ch-card ch-request-detail__loading-card">
+    <app-skeleton variant="card"></app-skeleton>
+  </div>
+</div>
+
+<!-- ─── Not Found State ─────────────────────────────────────── -->
+<div *ngIf="!isLoading && notFound" class="ch-container ch-request-detail">
+  <div class="ch-card ch-request-detail__not-found">
+    <div class="ch-request-detail__not-found-icon">
+      <mat-icon>search_off</mat-icon>
+    </div>
+    <h2 class="ch-request-detail__not-found-title">Request Not Found</h2>
+    <p class="ch-request-detail__not-found-desc">
+      This request doesn't exist or you don't have access to it.
+    </p>
+    <button mat-flat-button color="primary" (click)="onBack()">
+      <mat-icon>arrow_back</mat-icon>
+      Back to My Requests
+    </button>
+  </div>
+</div>
+
+<!-- ─── Error State ─────────────────────────────────────────── -->
+<div *ngIf="!isLoading && !notFound && hasError" class="ch-container ch-request-detail">
+  <app-alert type="error" [message]="errorMessage" (dismiss)="onRetry()"></app-alert>
+  <div class="ch-request-detail__retry">
+    <button mat-stroked-button color="primary" (click)="onRetry()">
+      <mat-icon>refresh</mat-icon>
+      Retry
+    </button>
+  </div>
+</div>
+
+<!-- ─── Success State ───────────────────────────────────────── -->
+<div *ngIf="!isLoading && !notFound && !hasError && request" class="ch-container ch-request-detail">
+
+  <!-- Header -->
+  <div class="ch-request-detail__header">
+    <button mat-stroked-button class="ch-request-detail__back" (click)="onBack()">
+      <mat-icon>arrow_back</mat-icon>
+      My Requests
+    </button>
+    <div class="ch-request-detail__heading">
+      <h1 class="ch-request-detail__title">{{ request.serviceType }}</h1>
+      <div class="ch-request-detail__badges">
+        <app-badge [status]="request.status"></app-badge>
+        <app-badge [status]="request.urgency"></app-badge>
+      </div>
+    </div>
+  </div>
+
+  <!-- Success / Cancel feedback -->
+  <app-alert
+    *ngIf="successMessage"
+    type="success"
+    [message]="successMessage"
+    class="ch-request-detail__feedback"
+  ></app-alert>
+  <app-alert
+    *ngIf="cancelError"
+    type="error"
+    [message]="cancelError"
+    (dismiss)="cancelError = ''"
+    class="ch-request-detail__feedback"
+  ></app-alert>
+
+  <!-- Status Banner -->
+  <div
+    class="ch-request-detail__banner {{ bannerToneClass }}"
+    role="status"
+  >
+    <mat-icon>
+      {{ bannerConfig.tone === 'success' ? 'check_circle' : (bannerConfig.tone === 'error' ? 'block' : 'info') }}
+    </mat-icon>
+    <span>{{ bannerConfig.message }}</span>
+  </div>
+
+  <!-- Layout: main + aside -->
+  <div class="ch-request-detail__layout">
+
+    <!-- ─── Main Column ─────────────────────────────────────── -->
+    <!-- Request Details -->
+    <div class="ch-card ch-request-detail__card">
+      <h2 class="ch-request-detail__card-title">Request Details</h2>
+      <div class="ch-request-detail__problem">
+        <p>{{ request.problemDescription }}</p>
+      </div>
+      <div class="ch-request-detail__rows">
+        <div class="ch-request-detail__row">
+          <span class="ch-request-detail__label">Created</span>
+          <span class="ch-request-detail__value">{{ formatDate(request.createdAt) }}</span>
+        </div>
+        <div class="ch-request-detail__row">
+          <span class="ch-request-detail__label">Preferred Date</span>
+          <span class="ch-request-detail__value">{{ formatDate(request.preferredDate) }}</span>
+        </div>
+        <div class="ch-request-detail__row" *ngIf="request.estimatedPrice != null">
+          <span class="ch-request-detail__label">Estimated Price</span>
+          <span class="ch-request-detail__value">{{ formatPrice(request.estimatedPrice) }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Property -->
+    <div class="ch-card ch-request-detail__card">
+      <h2 class="ch-request-detail__card-title">Location & Property</h2>
+      <div class="ch-request-detail__rows">
+        <div class="ch-request-detail__row">
+          <mat-icon>location_on</mat-icon>
+          <span class="ch-request-detail__label">ZIP</span>
+          <span class="ch-request-detail__value">{{ request.zipCode }}</span>
+        </div>
+        <div class="ch-request-detail__row" *ngIf="request.address">
+          <mat-icon>place</mat-icon>
+          <span class="ch-request-detail__label">Address</span>
+          <span class="ch-request-detail__value">{{ request.address }}</span>
+        </div>
+        <div class="ch-request-detail__row">
+          <mat-icon>home</mat-icon>
+          <span class="ch-request-detail__label">Property Type</span>
+          <span class="ch-request-detail__value">{{ toTitleCase(request.propertyType) }}</span>
+        </div>
+        <div class="ch-request-detail__row" *ngIf="request.squareFootage">
+          <mat-icon>square_foot</mat-icon>
+          <span class="ch-request-detail__label">Square Footage</span>
+          <span class="ch-request-detail__value">{{ request.squareFootage.toLocaleString() }} sq ft</span>
+        </div>
+        <div class="ch-request-detail__row" *ngIf="request.hvacSystemType">
+          <mat-icon>ac_unit</mat-icon>
+          <span class="ch-request-detail__label">HVAC System</span>
+          <span class="ch-request-detail__value">{{ toTitleCase(request.hvacSystemType) }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Appointment -->
+    <div class="ch-card ch-request-detail__card" *ngIf="appointment">
+      <h2 class="ch-request-detail__card-title">
+        {{ appointment.status === 'COMPLETED' ? 'Completed Appointment' : 'Scheduled Appointment' }}
+      </h2>
+      <div class="ch-request-detail__rows">
+        <div class="ch-request-detail__row">
+          <mat-icon>person</mat-icon>
+          <span class="ch-request-detail__label">Contractor</span>
+          <span class="ch-request-detail__value">
+            {{ appointment.contractor?.firstName }} {{ appointment.contractor?.lastName }}
+          </span>
+        </div>
+        <div class="ch-request-detail__row">
+          <mat-icon>event</mat-icon>
+          <span class="ch-request-detail__label">Date & Time</span>
+          <span class="ch-request-detail__value">{{ formatDateTime(appointment.scheduledStart) }}</span>
+        </div>
+        <div class="ch-request-detail__row" *ngIf="appointment.completionNotes">
+          <mat-icon>sticky_note_2</mat-icon>
+          <span class="ch-request-detail__label">Notes</span>
+          <span class="ch-request-detail__value">{{ appointment.completionNotes }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── Aside Column ────────────────────────────────────── -->
+    <div class="ch-request-detail__aside">
+
+      <!-- Pricing -->
+      <div class="ch-card ch-request-detail__card">
+        <h2 class="ch-request-detail__card-title">Pricing</h2>
+        <div class="ch-request-detail__price">
+          {{ request.estimatedPrice != null ? formatPrice(request.estimatedPrice) : 'Not quoted yet' }}
+        </div>
+        <p class="ch-request-detail__price-hint" *ngIf="request.estimatedPrice == null">
+          A contractor may provide a quote once your request is matched.
+        </p>
+      </div>
+
+      <!-- Cancel -->
+      <div class="ch-card ch-request-detail__card ch-request-detail__cancel" *ngIf="canCancel">
+        <h2 class="ch-request-detail__card-title">Need to cancel?</h2>
+        <p class="ch-request-detail__cancel-desc">
+          You can cancel this request while it is still waiting for a contractor.
+        </p>
+        <button
+          mat-flat-button
+          color="warn"
+          class="ch-request-detail__cancel-btn"
+          (click)="onCancelRequest()"
+          [disabled]="isCancelling"
+        >
+          <mat-spinner
+            *ngIf="isCancelling"
+            diameter="20"
+            class="ch-request-detail__cancel-spinner"
+          ></mat-spinner>
+          <mat-icon *ngIf="!isCancelling">close</mat-icon>
+          {{ isCancelling ? 'Cancelling...' : 'Cancel Request' }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

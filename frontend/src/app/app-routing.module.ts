@@ -13,6 +13,8 @@ import { AdminLayoutComponent } from './core/layouts/admin-layout/admin-layout.c
 import { CustomerDashboardPlaceholderComponent } from './components/placeholders/customer-dashboard-placeholder/customer-dashboard-placeholder.component';
 import { AdminDashboardPlaceholderComponent } from './components/placeholders/admin-dashboard-placeholder/admin-dashboard-placeholder.component';
 import { NewRequestComponent } from './components/customer/new-request/new-request.component';
+import { RequestListComponent } from './components/customer/requests/request-list/request-list.component';
+import { RequestDetailComponent } from './components/customer/requests/request-detail/request-detail.component';
 
 import { ContractorDashboardComponent } from './components/contractor/contractor-dashboard/contractor-dashboard.component';
 import { LeadInboxComponent } from './components/contractor/lead-inbox/lead-inbox.component';
@@ -45,6 +47,8 @@ const routes: Routes = [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       { path: 'dashboard', component: CustomerDashboardPlaceholderComponent },
       { path: 'request/new', component: NewRequestComponent },
+      { path: 'requests', component: RequestListComponent },
+      { path: 'requests/:id', component: RequestDetailComponent },
     ],
   },
 
