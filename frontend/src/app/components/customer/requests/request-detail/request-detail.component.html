@@ -209,4 +209,12 @@
       </div>
     </div>
   </div>
+
+  <!-- Review -->
+  <app-review-section
+    *ngIf="request.status === 'COMPLETED'"
+    [serviceRequestId]="request.id"
+    [contractorName]="contractorNameForReview"
+    class="ch-request-detail__review"
+  ></app-review-section>
 </div>

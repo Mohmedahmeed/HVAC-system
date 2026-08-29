@@ -12,6 +12,7 @@ import { EmptyStateComponent } from './components/empty-state/empty-state.compon
 import { SkeletonComponent } from './components/skeleton/skeleton.component';
 import { AlertComponent } from './components/alert/alert.component';
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
+import { RatingStarsComponent } from './components/rating-stars/rating-stars.component';
 
 const sharedComponents = [
   BadgeComponent,
@@ -19,6 +20,7 @@ const sharedComponents = [
   SkeletonComponent,
   AlertComponent,
   ConfirmDialogComponent,
+  RatingStarsComponent,
 ];
 
 @NgModule({

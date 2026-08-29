@@ -1,0 +1,139 @@
+<section class="ch-card ch-review-section" aria-label="Review your service">
+  <app-alert
+    *ngIf="existingError"
+    type="error"
+    [message]="existingError"
+    (dismiss)="existingError = ''"
+  ></app-alert>
+
+  <!-- ─── Loading existing review ──────────────────────────── -->
+  <div *ngIf="isLoadingExisting" class="ch-review-section__loading">
+    <app-skeleton variant="text"></app-skeleton>
+    <app-skeleton variant="text"></app-skeleton>
+  </div>
+
+  <!-- ─── Thank-you / read-only replay ─────────────────────── -->
+  <div
+    *ngIf="!isLoadingExisting && !existingError && hasReview"
+    class="ch-review-section__status"
+    role="status"
+  >
+    <header class="ch-review-section__header">
+      <mat-icon class="ch-review-section__header-icon">verified</mat-icon>
+      <h2 class="ch-review-section__title">Thanks for your review</h2>
+      <p class="ch-review-section__subtitle">
+        Your feedback helps other homeowners choose a reliable HVAC
+        professional.
+      </p>
+      <p class="ch-review-section__subject" *ngIf="reviewedContractorName">
+        Your review of <strong>{{ reviewedContractorName }}</strong>
+      </p>
+    </header>
+
+    <dl class="ch-review-section__summary">
+      <div
+        *ngFor="let dim of dimensions"
+        class="ch-review-section__summary-row"
+      >
+        <dt>{{ dim.label }}</dt>
+        <dd>
+          <app-rating-stars
+            [value]="existingReview![dim.key]"
+            [readonly]="true"
+            [ariaLabel]="dim.label + ', ' + existingReview![dim.key] + ' out of 5'"
+          ></app-rating-stars>
+        </dd>
+      </div>
+    </dl>
+
+    <p *ngIf="existingReview!.comment" class="ch-review-section__comment">
+      "{{ existingReview!.comment }}"
+    </p>
+
+    <p class="ch-review-section__date">
+      {{ formatDate(existingReview!.createdAt) }}
+    </p>
+  </div>
+
+  <!-- ─── Review form ──────────────────────────────────────── -->
+  <ng-container *ngIf="!isLoadingExisting && !existingError && !hasReview">
+    <header class="ch-review-section__header">
+      <mat-icon class="ch-review-section__header-icon">rate_review</mat-icon>
+      <h2 class="ch-review-section__title">Rate Your Experience</h2>
+      <p class="ch-review-section__subtitle">
+        How was your experience with this contractor? Your feedback helps
+        other homeowners choose a reliable HVAC professional.
+      </p>
+      <p class="ch-review-section__subject" *ngIf="reviewedContractorName">
+        You're reviewing <strong>{{ reviewedContractorName }}</strong>
+      </p>
+    </header>
+
+    <p class="ch-review-section__form-hint" role="note">
+      All five ratings are required; the comment is optional.
+    </p>
+
+    <form
+      class="ch-review-section__form"
+      (ngSubmit)="onSubmit()"
+      novalidate
+    >
+      <div
+        *ngFor="let dim of dimensions"
+        class="ch-review-section__field"
+      >
+        <span class="ch-review-section__label">{{ dim.label }}</span>
+        <app-rating-stars
+          [value]="ratings[dim.key]"
+          (valueChange)="onSelect(dim, $event)"
+          [ariaLabel]="dim.label"
+          [required]="true"
+        ></app-rating-stars>
+      </div>
+
+      <mat-form-field
+        appearance="outline"
+        class="ch-review-section__comment-field"
+      >
+        <mat-label>Comment (optional)</mat-label>
+        <textarea
+          matInput
+          rows="3"
+          maxlength="500"
+          placeholder="Share details about your experience..."
+          [(ngModel)]="comment"
+          name="comment"
+        ></textarea>
+      </mat-form-field>
+
+      <app-alert
+        *ngIf="submitError"
+        type="error"
+        class="ch-review-section__error"
+        [message]="submitError"
+        (dismiss)="submitError = ''"
+      ></app-alert>
+
+      <div class="ch-review-section__actions">
+        <p class="ch-review-section__hint" aria-hidden="true">
+          Your overall rating summarizes the five dimensions above.
+        </p>
+        <button
+          mat-flat-button
+          color="primary"
+          type="submit"
+          [disabled]="!isValid || isSubmitting"
+          class="ch-review-section__submit"
+        >
+          <mat-spinner
+            *ngIf="isSubmitting"
+            diameter="20"
+            class="ch-review-section__spinner"
+          ></mat-spinner>
+          <mat-icon *ngIf="!isSubmitting">send</mat-icon>
+          {{ isSubmitting ? 'Submitting...' : 'Submit Review' }}
+        </button>
+      </div>
+    </form>
+  </ng-container>
+</section>

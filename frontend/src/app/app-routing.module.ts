@@ -23,6 +23,7 @@ import { AppointmentListComponent } from './components/contractor/appointment-li
 import { ContractorProfileComponent } from './components/contractor/contractor-profile/contractor-profile.component';
 import { ServiceAreasComponent } from './components/contractor/service-areas/service-areas.component';
 import { AvailabilityComponent } from './components/contractor/availability/availability.component';
+import { ContractorReviewsComponent } from './components/contractor/reviews/contractor-reviews/contractor-reviews.component';
 
 import { AuthGuard } from './core/guards/auth.guard';
 import { RoleGuard } from './core/guards/role.guard';
@@ -67,6 +68,7 @@ const routes: Routes = [
       { path: 'profile', component: ContractorProfileComponent },
       { path: 'service-areas', component: ServiceAreasComponent },
       { path: 'availability', component: AvailabilityComponent },
+      { path: 'reviews', component: ContractorReviewsComponent },
     ],
   },
 

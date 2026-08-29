@@ -1,0 +1,38 @@
+<div
+  class="ch-rating"
+  role="radiogroup"
+  [attr.aria-label]="ariaLabel"
+  (keydown)="onKeydown($event)"
+>
+  <ng-container *ngIf="!readonly">
+    <button
+      *ngFor="let star of values"
+      #starBtn
+      type="button"
+      class="ch-rating__star"
+      [class.ch-rating__star--active]="star <= value"
+      role="radio"
+      [attr.aria-checked]="star === value"
+      [attr.aria-label]="star + ' out of ' + max"
+      [attr.aria-required]="required ? 'true' : null"
+      [attr.tabindex]="star === value || (value === 0 && star === 1) ? '0' : '-1'"
+      (click)="onSelect(star)"
+    >
+      <mat-icon>{{ star <= value ? 'star' : 'star_border' }}</mat-icon>
+    </button>
+  </ng-container>
+
+  <ng-container *ngIf="readonly">
+    <span class="ch-rating__row">
+      <span
+        *ngFor="let star of values"
+        class="ch-rating__star ch-rating__star--static"
+        [class.ch-rating__star--active]="star <= value"
+        aria-hidden="true"
+      >
+        <mat-icon>{{ star <= value ? 'star' : 'star_border' }}</mat-icon>
+      </span>
+      <span class="ch-rating__sr">{{ displayLabel }}</span>
+    </span>
+  </ng-container>
+</div>

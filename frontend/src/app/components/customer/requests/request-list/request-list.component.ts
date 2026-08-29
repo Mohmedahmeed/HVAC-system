@@ -104,6 +104,11 @@ export class RequestListComponent implements OnInit, OnDestroy {
 
   // ─── Helpers ───────────────────────────────────────────────
 
+  rowAriaLabel(req: ServiceRequest): string {
+    const label = 'View ' + this.formatServiceType(req.serviceType) + ' request';
+    return req.status === 'COMPLETED' ? label + ' — leave a review' : label;
+  }
+
   formatServiceType(type: string): string {
     return type || 'Service Request';
   }

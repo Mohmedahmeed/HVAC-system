@@ -84,7 +84,7 @@
       class="ch-request-list__row"
       (click)="onOpenRequest(req.id)"
       (keydown.enter)="onOpenRequest(req.id)"
-      [attr.aria-label]="'View ' + formatServiceType(req.serviceType) + ' request'"
+      [attr.aria-label]="rowAriaLabel(req)"
     >
       <span class="ch-request-list__main">
         <span class="ch-request-list__info">
@@ -104,6 +104,10 @@
         <span class="ch-request-list__zip" *ngIf="req.zipCode">
           <mat-icon>location_on</mat-icon>
           {{ req.zipCode }}
+        </span>
+        <span class="ch-request-list__review" *ngIf="req.status === 'COMPLETED'">
+          <mat-icon>star</mat-icon>
+          Leave a Review
         </span>
         <mat-icon class="ch-request-list__chevron">chevron_right</mat-icon>
       </span>

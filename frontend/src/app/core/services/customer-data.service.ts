@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ServiceRequest } from '../models/service-request.model';
 import { Appointment } from '../models/appointment.model';
+import { Review, ReviewInput } from '../models/review.model';
 
 @Injectable({
   providedIn: 'root',
@@ -42,5 +43,16 @@ export class CustomerDataService {
     return this.http.put<ServiceRequest>(`${this.apiUrl}/service-requests/${id}`, {
       status: 'CANCELLED',
     });
+  }
+
+  getMyReviews(): Observable<Review[]> {
+    return this.http.get<Review[]>(`${this.apiUrl}/reviews/my-reviews`);
+  }
+
+  createReview(serviceRequestId: number, data: ReviewInput): Observable<Review> {
+    return this.http.post<Review>(
+      `${this.apiUrl}/reviews/service-request/${serviceRequestId}`,
+      data
+    );
   }
 }

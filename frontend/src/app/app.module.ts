@@ -33,6 +33,7 @@ import { AdminDashboardPlaceholderComponent } from './components/placeholders/ad
 import { NewRequestComponent } from './components/customer/new-request/new-request.component';
 import { RequestListComponent } from './components/customer/requests/request-list/request-list.component';
 import { RequestDetailComponent } from './components/customer/requests/request-detail/request-detail.component';
+import { ReviewSectionComponent } from './components/customer/requests/review-section/review-section.component';
 
 // ─── Contractor (F4) ───────────────────────────────────────
 import { ContractorDashboardComponent } from './components/contractor/contractor-dashboard/contractor-dashboard.component';
@@ -44,6 +45,9 @@ import { AppointmentListComponent } from './components/contractor/appointment-li
 import { ContractorProfileComponent } from './components/contractor/contractor-profile/contractor-profile.component';
 import { ServiceAreasComponent } from './components/contractor/service-areas/service-areas.component';
 import { AvailabilityComponent } from './components/contractor/availability/availability.component';
+
+// ─── Contractor Reviews (F7) ──────────────────────────────
+import { ContractorReviewsComponent } from './components/contractor/reviews/contractor-reviews/contractor-reviews.component';
 
 // ─── Legacy (kept temporarily — files not yet deleted) ──────
 import { NavComponent } from './components/nav/nav.component';
@@ -71,6 +75,7 @@ import { ProfileComponent } from './components/profile/profile.component';
     // Customer Requests (F6)
     RequestListComponent,
     RequestDetailComponent,
+    ReviewSectionComponent,
     // Contractor (F4)
     ContractorDashboardComponent,
     LeadInboxComponent,
@@ -80,6 +85,8 @@ import { ProfileComponent } from './components/profile/profile.component';
     ContractorProfileComponent,
     ServiceAreasComponent,
     AvailabilityComponent,
+    // Contractor Reviews (F7)
+    ContractorReviewsComponent,
     // Legacy (kept temporarily)
     NavComponent,
     FooterComponent,

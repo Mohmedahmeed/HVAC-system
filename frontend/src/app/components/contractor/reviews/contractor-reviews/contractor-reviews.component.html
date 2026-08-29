@@ -1,0 +1,119 @@
+<!-- ═══════════════════════════════════════════════════════════════
+     My Reviews (Contractor)
+     ═══════════════════════════════════════════════════════════════ -->
+
+<!-- ─── Loading State ────────────────────────────────────────── -->
+<div *ngIf="isLoading" class="ch-container ch-reviews">
+  <div class="ch-reviews__header">
+    <app-skeleton variant="text"></app-skeleton>
+  </div>
+  <div class="ch-card ch-reviews__skeleton-card">
+    <app-skeleton variant="card"></app-skeleton>
+  </div>
+  <div class="ch-card ch-reviews__skeleton-card">
+    <app-skeleton variant="card"></app-skeleton>
+  </div>
+</div>
+
+<!-- ─── Error State ─────────────────────────────────────────── -->
+<div *ngIf="!isLoading && hasError" class="ch-container ch-reviews">
+  <app-alert type="error" [message]="errorMessage" (dismiss)="onRetry()"></app-alert>
+  <div class="ch-reviews__retry">
+    <button mat-stroked-button color="primary" (click)="onRetry()">
+      <mat-icon>refresh</mat-icon>
+      Retry
+    </button>
+  </div>
+</div>
+
+<!-- ─── Success State ───────────────────────────────────────── -->
+<div *ngIf="!isLoading && !hasError" class="ch-container ch-reviews">
+
+  <!-- Header -->
+  <header class="ch-reviews__header">
+    <h1 class="ch-reviews__title">Reviews</h1>
+    <p class="ch-reviews__subtitle">
+      See what customers say about your work.
+    </p>
+  </header>
+
+  <!-- Summary -->
+  <section class="ch-card ch-reviews__summary" aria-label="Rating summary">
+    <div class="ch-reviews__summary-score">
+      <span class="ch-reviews__summary-number">{{ total > 0 ? overallAverage.toFixed(1) : '—' }}</span>
+      <app-rating-stars
+        [value]="starsFor(overallAverage)"
+        [readonly]="true"
+        ariaLabel="Average overall rating"
+      ></app-rating-stars>
+      <span class="ch-reviews__summary-count">
+        Based on {{ total }} {{ total === 1 ? 'review' : 'reviews' }}
+      </span>
+    </div>
+
+    <dl class="ch-reviews__breakdown">
+      <div *ngFor="let dim of dimensions" class="ch-reviews__breakdown-row">
+        <dt>{{ dim.label }}</dt>
+        <dd>
+          <app-rating-stars
+            [value]="starsFor(averageOf(dim.key))"
+            [readonly]="true"
+            [ariaLabel]="dim.label + ' average'"
+          ></app-rating-stars>
+          <span class="ch-reviews__breakdown-value">
+            {{ total > 0 ? averageOf(dim.key).toFixed(1) : '—' }}
+          </span>
+        </dd>
+      </div>
+    </dl>
+  </section>
+
+  <!-- External profile hint -->
+  <p class="ch-reviews__hint" *ngIf="total > 0">
+    Review ratings also appear when your contractor profile is viewed by
+    customers on the marketplace.
+  </p>
+
+  <!-- Empty State -->
+  <app-empty-state
+    *ngIf="total === 0"
+    icon="star_outline"
+    message="No reviews yet"
+    class="ch-reviews__empty"
+  ></app-empty-state>
+  <p class="ch-reviews__hint" *ngIf="total === 0">
+    Complete jobs and deliver great service to start building your reputation.
+  </p>
+
+  <!-- Review List -->
+  <div *ngIf="total > 0" class="ch-reviews__list">
+    <article
+      *ngFor="let review of reviews"
+      class="ch-card ch-reviews__review-card"
+    >
+      <header class="ch-reviews__review-header">
+        <div class="ch-reviews__review-heading">
+          <span class="ch-reviews__review-author">{{ reviewerName(review) }}</span>
+          <span class="ch-reviews__review-date">{{ formatDate(review.createdAt) }}</span>
+        </div>
+        <app-rating-stars
+          [value]="review.overallRating"
+          [readonly]="true"
+          [ariaLabel]="'Overall rating, ' + review.overallRating + ' out of 5'"
+        ></app-rating-stars>
+      </header>
+
+      <div class="ch-reviews__review-meta">
+        <p class="ch-reviews__review-service">{{ review.serviceRequest?.serviceType || 'HVAC Service' }}</p>
+        <span class="ch-reviews__review-job">
+          <mat-icon>check_circle</mat-icon>
+          Verified job
+        </span>
+      </div>
+
+      <p *ngIf="review.comment" class="ch-reviews__review-comment">
+        "{{ review.comment }}"
+      </p>
+    </article>
+  </div>
+</div>

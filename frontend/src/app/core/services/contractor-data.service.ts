@@ -6,6 +6,7 @@ import { Appointment } from '../models/appointment.model';
 import { ContractorProfile } from '../models/contractor-profile.model';
 import { ServiceArea } from '../models/service-area.model';
 import { Availability } from '../models/availability.model';
+import { Review } from '../models/review.model';
 
 @Injectable({
   providedIn: 'root',
@@ -76,5 +77,9 @@ export class ContractorDataService {
 
   deleteAvailability(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/availability/${id}`);
+  }
+
+  getMyReviews(): Observable<Review[]> {
+    return this.http.get<Review[]>(`${this.apiUrl}/reviews/my-reviews`);
   }
 }

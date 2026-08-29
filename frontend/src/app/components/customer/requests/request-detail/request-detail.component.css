@@ -92,6 +92,13 @@
   align-items: start;
 }
 
+/* ─── Review ─────────────────────────────────────────────────── */
+
+.ch-request-detail__review {
+  display: block;
+  margin-bottom: var(--ch-space-6);
+}
+
 /* ─── Cards ─────────────────────────────────────────────────── */
 
 .ch-request-detail__card {

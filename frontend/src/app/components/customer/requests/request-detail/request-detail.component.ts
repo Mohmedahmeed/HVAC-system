@@ -22,6 +22,13 @@ export class RequestDetailComponent implements OnInit, OnDestroy {
   request: ServiceRequest | null = null;
   appointment: Appointment | null = null;
 
+  get contractorNameForReview(): string {
+    const contractor = this.appointment?.contractor;
+    return contractor?.firstName
+      ? `${contractor.firstName} ${contractor.lastName ?? ''}`.trim()
+      : '';
+  }
+
   isLoading = true;
   hasError = false;
   errorMessage = '';
