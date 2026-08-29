@@ -30,7 +30,7 @@ export class RoleGuard implements CanActivate {
       return true;
     }
 
-    const redirectPath = ROLE_DASHBOARDS[userRole || ''] || '/home';
+    const redirectPath = ROLE_DASHBOARDS[userRole || ''] || '/';
     this.router.navigate([redirectPath]);
     return false;
   }

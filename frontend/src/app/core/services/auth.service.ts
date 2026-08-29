@@ -109,7 +109,7 @@ export class AuthService {
 
   logout(): void {
     this.clearAuth();
-    this.router.navigate(['/home']);
+    this.router.navigate(['/']);
   }
 
   // ─── Token ───────────────────────────────────────────────

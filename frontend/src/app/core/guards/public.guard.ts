@@ -18,7 +18,7 @@ export class PublicGuard implements CanActivate {
     }
 
     const role = this.authService.getUserRole();
-    const redirectPath = ROLE_DASHBOARDS[role || ''] || '/home';
+    const redirectPath = ROLE_DASHBOARDS[role || ''] || '/';
     this.router.navigate([redirectPath]);
     return false;
   }

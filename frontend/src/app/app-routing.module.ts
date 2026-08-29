@@ -31,8 +31,8 @@ import { PublicGuard } from './core/guards/public.guard';
 
 const routes: Routes = [
   // ─── Public ────────────────────────────────────────────────
-  { path: '', redirectTo: 'home', pathMatch: 'full' },
-  { path: 'home', component: HomeComponent },
+  { path: '', component: HomeComponent, pathMatch: 'full' },
+  { path: 'home', redirectTo: '/', pathMatch: 'full' },
   { path: 'login', component: LogInComponent, canActivate: [PublicGuard] },
   { path: 'register', redirectTo: 'register/customer', pathMatch: 'full' },
   { path: 'register/customer', component: RegisterComponent, canActivate: [PublicGuard] },
@@ -85,7 +85,7 @@ const routes: Routes = [
   },
 
   // ─── Wildcard ─────────────────────────────────────────────
-  { path: '**', redirectTo: 'home' },
+  { path: '**', redirectTo: '/' },
 ];
 
 @NgModule({

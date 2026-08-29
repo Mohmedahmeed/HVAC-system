@@ -75,7 +75,7 @@ export class LogInComponent implements OnInit {
   }
 
   private navigateByRole(role: string): void {
-    const path = ROLE_DASHBOARDS[role] || '/home';
+    const path = ROLE_DASHBOARDS[role] || '/';
     this.router.navigate([path]);
   }
 }

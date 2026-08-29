@@ -26,6 +26,7 @@ import { AdminLayoutComponent } from './core/layouts/admin-layout/admin-layout.c
 
 // ─── Shared Navigation ──────────────────────────────────────
 import { TopBarComponent } from './components/top-bar/top-bar.component';
+import { UnauthnavComponent } from './components/unauthnav/unauthnav.component';
 
 // ─── Placeholders ───────────────────────────────────────────
 import { CustomerDashboardPlaceholderComponent } from './components/placeholders/customer-dashboard-placeholder/customer-dashboard-placeholder.component';
@@ -68,6 +69,7 @@ import { ProfileComponent } from './components/profile/profile.component';
     AdminLayoutComponent,
     // Shared navigation
     TopBarComponent,
+    UnauthnavComponent,
     // Placeholders
     CustomerDashboardPlaceholderComponent,
     AdminDashboardPlaceholderComponent,
