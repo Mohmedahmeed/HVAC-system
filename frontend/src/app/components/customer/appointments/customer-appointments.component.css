@@ -1,0 +1,142 @@
+/* ═══════════════════════════════════════════════════════════════
+   Customer Appointments
+   ═══════════════════════════════════════════════════════════════ */
+
+.ch-appointments {
+  padding-top: var(--ch-space-8);
+  padding-bottom: var(--ch-space-12);
+}
+
+.ch-appointments__subtitle {
+  font-size: 15px;
+  color: var(--ch-text-secondary);
+  margin: 0 0 var(--ch-space-6) 0;
+}
+
+.ch-appointments__skeleton-header {
+  margin-bottom: var(--ch-space-6);
+}
+
+.ch-appointments__empty {
+  text-align: center;
+}
+
+.ch-appointments__section {
+  margin-bottom: var(--ch-space-6);
+}
+
+.ch-appointments__section-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--ch-text);
+  margin: 0 0 var(--ch-space-4) 0;
+}
+
+.ch-appointments__list {
+  display: flex;
+  flex-direction: column;
+}
+
+.ch-appointments__row {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--ch-space-4);
+  padding: var(--ch-space-4) 0;
+  border-bottom: 1px solid var(--ch-divider);
+}
+
+.ch-appointments__row:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.ch-appointments__row:first-child {
+  padding-top: 0;
+}
+
+.ch-appointments__icon {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--ch-radius);
+  background: var(--ch-divider);
+  color: var(--ch-text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.ch-appointments__icon--primary {
+  background: var(--ch-primary-light);
+  color: var(--ch-primary);
+}
+
+.ch-appointments__icon mat-icon {
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+}
+
+.ch-appointments__info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ch-space-1);
+  flex: 1;
+  min-width: 0;
+}
+
+.ch-appointments__service {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ch-text);
+}
+
+.ch-appointments__contractor,
+.ch-appointments__datetime {
+  display: flex;
+  align-items: center;
+  gap: var(--ch-space-1);
+  font-size: 14px;
+  color: var(--ch-text-secondary);
+}
+
+.ch-appointments__contractor mat-icon,
+.ch-appointments__datetime mat-icon {
+  font-size: 16px;
+  width: 16px;
+  height: 16px;
+}
+
+.ch-appointments__notes {
+  display: flex;
+  align-items: center;
+  gap: var(--ch-space-1);
+  font-size: 13px;
+  color: var(--ch-text-muted);
+  font-style: italic;
+}
+
+.ch-appointments__notes mat-icon {
+  font-size: 16px;
+  width: 16px;
+  height: 16px;
+}
+
+.ch-appointments__status {
+  flex-shrink: 0;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   Responsive
+   ═══════════════════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+  .ch-appointments__row {
+    flex-direction: column;
+    gap: var(--ch-space-2);
+  }
+
+  .ch-appointments__status {
+    margin-left: calc(40px + var(--ch-space-4));
+  }
+}

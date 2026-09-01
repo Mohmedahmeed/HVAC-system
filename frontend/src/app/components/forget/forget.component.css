@@ -27,6 +27,12 @@ body {
   color: rgb(17, 17, 201);
 }
 
+.login-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
 .login-wrapper mat-card-header mat-card-title {
   font-size: 25px;
   margin: 0;

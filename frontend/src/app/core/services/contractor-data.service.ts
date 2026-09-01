@@ -7,12 +7,13 @@ import { ContractorProfile } from '../models/contractor-profile.model';
 import { ServiceArea } from '../models/service-area.model';
 import { Availability } from '../models/availability.model';
 import { Review } from '../models/review.model';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ContractorDataService {
-  private apiUrl = 'http://localhost:8081/api/v1';
+  private apiUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) {}
 

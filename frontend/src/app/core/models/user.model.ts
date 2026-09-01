@@ -9,6 +9,7 @@ export interface User {
   phone?: string;
   isActive: boolean;
   siret?: string;
+  createdAt?: string;
 }
 
 export interface MeResponse {

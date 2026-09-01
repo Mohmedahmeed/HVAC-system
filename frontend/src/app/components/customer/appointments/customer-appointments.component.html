@@ -1,0 +1,95 @@
+<!-- ═══════════════════════════════════════════════════════════════
+     Customer Appointments
+     ═══════════════════════════════════════════════════════════════ -->
+
+<!-- ─── Loading State ────────────────────────────────────────── -->
+<div *ngIf="isLoading" class="ch-container ch-appointments">
+  <div class="ch-card ch-appointments__skeleton-header">
+    <app-skeleton variant="text"></app-skeleton>
+  </div>
+  <div class="ch-card ch-appointments__section">
+    <app-skeleton variant="list"></app-skeleton>
+  </div>
+</div>
+
+<!-- ─── Error State ─────────────────────────────────────────── -->
+<div *ngIf="!isLoading && hasError" class="ch-container ch-appointments">
+  <h1 class="ch-page-header">Appointments</h1>
+  <app-alert type="error" [message]="errorMessage" (dismiss)="onRetry()"></app-alert>
+  <div style="text-align: center; margin-top: var(--ch-space-6);">
+    <button mat-stroked-button color="primary" (click)="onRetry()">Try Again</button>
+  </div>
+</div>
+
+<!-- ─── Loaded State ────────────────────────────────────────── -->
+<div *ngIf="!isLoading && !hasError" class="ch-container ch-appointments">
+
+  <h1 class="ch-page-header">Appointments</h1>
+  <p class="ch-appointments__subtitle">Track your scheduled HVAC service visits.</p>
+
+  <!-- Empty state -->
+  <div *ngIf="!hasAppointments" class="ch-card ch-appointments__empty">
+    <app-empty-state
+      icon="event_busy"
+      message="No appointments yet"
+      [actionText]="'Request HVAC Service'"
+      (actionClick)="onRequestService()"
+    ></app-empty-state>
+  </div>
+
+  <!-- Upcoming -->
+  <div *ngIf="scheduledAppointments.length > 0" class="ch-card ch-appointments__section">
+    <h2 class="ch-appointments__section-title">Upcoming</h2>
+    <div class="ch-appointments__list">
+      <div *ngFor="let apt of scheduledAppointments" class="ch-appointments__row">
+        <div class="ch-appointments__icon ch-appointments__icon--primary">
+          <mat-icon>event</mat-icon>
+        </div>
+        <div class="ch-appointments__info">
+          <span class="ch-appointments__service">{{ apt.serviceRequest?.serviceType || 'HVAC Service' }}</span>
+          <span class="ch-appointments__contractor">
+            <mat-icon>person</mat-icon>
+            {{ contractorName(apt) }}
+          </span>
+          <span class="ch-appointments__datetime">
+            <mat-icon>calendar_today</mat-icon>
+            {{ formatDate(apt.scheduledStart) }} at {{ formatTime(apt.scheduledStart) }}
+          </span>
+          <span class="ch-appointments__notes" *ngIf="apt.notes">
+            <mat-icon>sticky_note_2</mat-icon>
+            {{ apt.notes }}
+          </span>
+        </div>
+        <div class="ch-appointments__status">
+          <app-badge [status]="apt.status"></app-badge>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Past -->
+  <div *ngIf="pastAppointments.length > 0" class="ch-card ch-appointments__section">
+    <h2 class="ch-appointments__section-title">Past</h2>
+    <div class="ch-appointments__list">
+      <div *ngFor="let apt of pastAppointments" class="ch-appointments__row">
+        <div class="ch-appointments__icon">
+          <mat-icon>history</mat-icon>
+        </div>
+        <div class="ch-appointments__info">
+          <span class="ch-appointments__service">{{ apt.serviceRequest?.serviceType || 'HVAC Service' }}</span>
+          <span class="ch-appointments__contractor">
+            <mat-icon>person</mat-icon>
+            {{ contractorName(apt) }}
+          </span>
+          <span class="ch-appointments__datetime">
+            <mat-icon>calendar_today</mat-icon>
+            {{ formatDate(apt.scheduledStart) }} at {{ formatTime(apt.scheduledStart) }}
+          </span>
+        </div>
+        <div class="ch-appointments__status">
+          <app-badge [status]="apt.status"></app-badge>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

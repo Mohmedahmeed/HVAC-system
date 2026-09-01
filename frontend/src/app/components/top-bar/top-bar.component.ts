@@ -20,7 +20,7 @@ export class TopBarComponent implements OnInit, OnDestroy {
   customerNavLinks = [
     { label: 'Dashboard', route: '/customer/dashboard', icon: 'dashboard', disabled: false },
     { label: 'My Requests', route: '/customer/requests', icon: 'list_alt', disabled: false },
-    { label: 'Appointments', route: '/customer/appointments', icon: 'event', disabled: true },
+    { label: 'Appointments', route: '/customer/appointments', icon: 'event', disabled: false },
   ];
 
   constructor(

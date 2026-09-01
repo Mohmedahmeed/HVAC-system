@@ -30,7 +30,7 @@ import { UnauthnavComponent } from './components/unauthnav/unauthnav.component';
 
 // ─── Placeholders ───────────────────────────────────────────
 import { CustomerDashboardPlaceholderComponent } from './components/placeholders/customer-dashboard-placeholder/customer-dashboard-placeholder.component';
-import { AdminDashboardPlaceholderComponent } from './components/placeholders/admin-dashboard-placeholder/admin-dashboard-placeholder.component';
+import { CustomerAppointmentsComponent } from './components/customer/appointments/customer-appointments.component';
 import { NewRequestComponent } from './components/customer/new-request/new-request.component';
 import { RequestListComponent } from './components/customer/requests/request-list/request-list.component';
 import { RequestDetailComponent } from './components/customer/requests/request-detail/request-detail.component';
@@ -50,10 +50,17 @@ import { AvailabilityComponent } from './components/contractor/availability/avai
 // ─── Contractor Reviews (F7) ──────────────────────────────
 import { ContractorReviewsComponent } from './components/contractor/reviews/contractor-reviews/contractor-reviews.component';
 
-// ─── Legacy (kept temporarily — files not yet deleted) ──────
-import { NavComponent } from './components/nav/nav.component';
+// ─── Contractor Portfolio ─────────────────────────────────
+import { ContractorPortfolioComponent } from './components/contractor/portfolio/contractor-portfolio.component';
+
+// ─── Admin ────────────────────────────────────────────────
+import { AdminDashboardComponent } from './components/admin/admin-dashboard/admin-dashboard.component';
+
+// ─── Public ───────────────────────────────────────────────
+import { PublicContractorProfileComponent } from './components/public/contractor-profile/public-contractor-profile.component';
+
+// ─── Legacy footer (still used by Home) ──────────────────────
 import { FooterComponent } from './components/footer/footer.component';
-import { ProfileComponent } from './components/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -72,7 +79,7 @@ import { ProfileComponent } from './components/profile/profile.component';
     UnauthnavComponent,
     // Placeholders
     CustomerDashboardPlaceholderComponent,
-    AdminDashboardPlaceholderComponent,
+    CustomerAppointmentsComponent,
     NewRequestComponent,
     // Customer Requests (F6)
     RequestListComponent,
@@ -89,10 +96,14 @@ import { ProfileComponent } from './components/profile/profile.component';
     AvailabilityComponent,
     // Contractor Reviews (F7)
     ContractorReviewsComponent,
-    // Legacy (kept temporarily)
-    NavComponent,
+    // Contractor Portfolio
+    ContractorPortfolioComponent,
+    // Admin
+    AdminDashboardComponent,
+    // Public
+    PublicContractorProfileComponent,
+    // Legacy footer (still used by Home)
     FooterComponent,
-    ProfileComponent,
   ],
   imports: [
     BrowserModule,

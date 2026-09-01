@@ -1,0 +1,167 @@
+/* ═══════════════════════════════════════════════════════════════
+   Contractor Portfolio
+   ═══════════════════════════════════════════════════════════════ */
+
+.ch-portfolio {
+  padding-top: var(--ch-space-8);
+  padding-bottom: var(--ch-space-12);
+}
+
+.ch-portfolio__subtitle {
+  font-size: 15px;
+  color: var(--ch-text-secondary);
+  margin: -8px 0 var(--ch-space-6) 0;
+}
+
+/* ─── Unavailable ───────────────────────────────────────────── */
+
+.ch-portfolio__unavailable {
+  text-align: center;
+  padding: var(--ch-space-10);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--ch-space-3);
+}
+
+.ch-portfolio__unavailable-icon {
+  font-size: 48px;
+  width: 48px;
+  height: 48px;
+  color: var(--ch-text-muted);
+}
+
+.ch-portfolio__unavailable-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--ch-text);
+  margin: 0;
+}
+
+.ch-portfolio__unavailable-note {
+  font-size: 14px;
+  color: var(--ch-text-secondary);
+  max-width: 480px;
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* ─── Filter ────────────────────────────────────────────────── */
+
+.ch-portfolio__filter {
+  display: flex;
+  align-items: center;
+  gap: var(--ch-space-3);
+  margin-bottom: var(--ch-space-6);
+}
+
+.ch-portfolio__filter-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ch-text);
+}
+
+.ch-portfolio__filter-select {
+  padding: 8px 12px;
+  border: 1px solid var(--ch-border);
+  border-radius: var(--ch-radius);
+  font-size: 14px;
+  color: var(--ch-text);
+  background: var(--ch-surface);
+}
+
+/* ─── Empty / Grid ──────────────────────────────────────────── */
+
+.ch-portfolio__empty {
+  text-align: center;
+}
+
+.ch-portfolio__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--ch-space-4);
+}
+
+.ch-portfolio__card {
+  padding: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.ch-portfolio__card-skeleton {
+  min-height: 220px;
+}
+
+.ch-portfolio__thumb {
+  height: 160px;
+  background: var(--ch-divider);
+  color: var(--ch-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ch-portfolio__thumb--empty {
+  color: var(--ch-text-muted);
+}
+
+.ch-portfolio__thumb mat-icon {
+  font-size: 40px;
+  width: 40px;
+  height: 40px;
+}
+
+.ch-portfolio__card-body {
+  padding: var(--ch-space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--ch-space-1);
+}
+
+.ch-portfolio__type {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ch-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.ch-portfolio__title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--ch-text);
+  margin: 0;
+}
+
+.ch-portfolio__date,
+.ch-portfolio__location {
+  display: flex;
+  align-items: center;
+  gap: var(--ch-space-1);
+  font-size: 13px;
+  color: var(--ch-text-secondary);
+}
+
+.ch-portfolio__date mat-icon,
+.ch-portfolio__location mat-icon {
+  font-size: 16px;
+  width: 16px;
+  height: 16px;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   Responsive
+   ═══════════════════════════════════════════════════════════════ */
+
+@media (max-width: 1024px) {
+  .ch-portfolio__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .ch-portfolio__grid {
+    grid-template-columns: 1fr;
+  }
+}

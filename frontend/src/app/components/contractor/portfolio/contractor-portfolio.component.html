@@ -1,0 +1,88 @@
+<!-- ═══════════════════════════════════════════════════════════════
+     Contractor Portfolio
+     ═══════════════════════════════════════════════════════════════ -->
+
+<!-- ─── Loading State ────────────────────────────────────────── -->
+<div *ngIf="isLoading" class="ch-container ch-portfolio">
+  <div class="ch-portfolio__grid">
+    <div class="ch-card ch-portfolio__card-skeleton" *ngFor="let i of [1,2,3]">
+      <app-skeleton variant="card"></app-skeleton>
+    </div>
+  </div>
+</div>
+
+<!-- ─── Error State ─────────────────────────────────────────── -->
+<div *ngIf="!isLoading && hasError" class="ch-container ch-portfolio">
+  <h1 class="ch-page-header">Portfolio</h1>
+  <app-alert type="error" message="Unable to load your portfolio. Please try again." (dismiss)="onRetry()"></app-alert>
+  <div style="text-align: center; margin-top: var(--ch-space-6);">
+    <button mat-stroked-button color="primary" (click)="onRetry()">Try Again</button>
+  </div>
+</div>
+
+<!-- ─── Unavailable State (backend pending, Stage 5) ────────── -->
+<div *ngIf="!isLoading && !hasError && unavailable" class="ch-container ch-portfolio">
+  <h1 class="ch-page-header">Portfolio</h1>
+  <div class="ch-card ch-portfolio__unavailable">
+    <mat-icon class="ch-portfolio__unavailable-icon">photo_library</mat-icon>
+    <h2 class="ch-portfolio__unavailable-title">Portfolio isn't available yet</h2>
+    <p class="ch-portfolio__unavailable-note">
+      Showcase your completed HVAC projects to build trust with homeowners.
+      Portfolio is coming in an upcoming release — your projects will appear here
+      once the feature is released.
+    </p>
+    <button mat-stroked-button color="primary" (click)="onRetry()">Check Again</button>
+  </div>
+</div>
+
+<!-- ─── Loaded State ────────────────────────────────────────── -->
+<div *ngIf="!isLoading && !hasError && !unavailable" class="ch-container ch-portfolio">
+  <div class="ch-portfolio__header">
+    <div>
+      <h1 class="ch-page-header">Portfolio</h1>
+      <p class="ch-portfolio__subtitle">Showcase your completed HVAC projects.</p>
+    </div>
+  </div>
+
+  <!-- Filter -->
+  <div *ngIf="projects.length > 0" class="ch-portfolio__filter">
+    <label class="ch-portfolio__filter-label" for="portfolio-service-filter">Service type</label>
+    <select
+      id="portfolio-service-filter"
+      class="ch-portfolio__filter-select"
+      [(ngModel)]="selectedServiceType"
+    >
+      <option value="ALL">All services</option>
+      <option *ngFor="let type of serviceTypes" [value]="type">{{ type }}</option>
+    </select>
+  </div>
+
+  <!-- Empty -->
+  <div *ngIf="projects.length === 0" class="ch-card ch-portfolio__empty">
+    <app-empty-state
+      icon="photo_library"
+      message="No projects yet — add your best work to build trust with homeowners"
+    ></app-empty-state>
+  </div>
+
+  <!-- Grid -->
+  <div *ngIf="hasProjects" class="ch-portfolio__grid">
+    <div *ngFor="let project of filteredProjects" class="ch-card ch-portfolio__card">
+      <div class="ch-portfolio__thumb" [class.ch-portfolio__thumb--empty]="!project.afterPhotoUrl">
+        <mat-icon>{{ project.afterPhotoUrl ? 'photo' : 'add_a_photo' }}</mat-icon>
+      </div>
+      <div class="ch-portfolio__card-body">
+        <span class="ch-portfolio__type">{{ project.serviceType }}</span>
+        <h3 class="ch-portfolio__title">{{ project.title }}</h3>
+        <span class="ch-portfolio__date" *ngIf="project.completionDate">
+          <mat-icon>calendar_today</mat-icon>
+          {{ formatDate(project.completionDate) }}
+        </span>
+        <span class="ch-portfolio__location" *ngIf="project.location">
+          <mat-icon>location_on</mat-icon>
+          {{ project.location }}
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
