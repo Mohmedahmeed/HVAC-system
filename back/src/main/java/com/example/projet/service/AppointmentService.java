@@ -99,6 +99,58 @@ public class AppointmentService {
         throw new UnauthorizedException("Invalid role");
     }
 
+    public Appointment cancelByCustomer(Long appointmentId) {
+        User currentUser = getCurrentUser();
+        if (currentUser.getRole() != Role.CUSTOMER)
+            throw new UnauthorizedException("Only customers can cancel appointments");
+
+        Appointment appointment = appointmentRepository.findById(appointmentId)
+                .orElseThrow(() -> new ResourceNotFoundException("Appointment not found with id: " + appointmentId));
+
+        if (!appointment.getServiceRequest().getCustomer().getId().equals(currentUser.getId()))
+            throw new UnauthorizedException("You can only cancel your own appointments");
+
+        if (appointment.getStatus() != AppointmentStatus.SCHEDULED)
+            throw new IllegalStateException("Only scheduled appointments can be cancelled");
+
+        // Approved rule: a customer may cancel at least 24 hours before the scheduled start.
+        if (!appointment.getScheduledStart().isAfter(LocalDateTime.now().plusHours(24)))
+            throw new IllegalStateException("Appointments can only be cancelled at least 24 hours before the scheduled start");
+
+        appointment.setStatus(AppointmentStatus.CANCELLED);
+        appointment.getServiceRequest().setStatus(com.example.projet.enums.ServiceRequestStatus.CANCELLED);
+        serviceRequestRepository.save(appointment.getServiceRequest());
+
+        return appointmentRepository.save(appointment);
+    }
+
+    public Appointment reschedule(Long appointmentId, LocalDateTime scheduledStart, LocalDateTime scheduledEnd) {
+        User currentUser = getCurrentUser();
+        if (currentUser.getRole() != Role.CUSTOMER)
+            throw new UnauthorizedException("Only customers can reschedule appointments");
+
+        Appointment appointment = appointmentRepository.findById(appointmentId)
+                .orElseThrow(() -> new ResourceNotFoundException("Appointment not found with id: " + appointmentId));
+
+        if (!appointment.getServiceRequest().getCustomer().getId().equals(currentUser.getId()))
+            throw new UnauthorizedException("You can only reschedule your own appointments");
+
+        if (appointment.getStatus() != AppointmentStatus.SCHEDULED)
+            throw new IllegalStateException("Only scheduled appointments can be rescheduled");
+
+        if (scheduledStart == null || scheduledEnd == null)
+            throw new IllegalArgumentException("Scheduled start and end are required");
+        if (!scheduledStart.isAfter(LocalDateTime.now()))
+            throw new IllegalArgumentException("Scheduled start must be in the future");
+        if (!scheduledEnd.isAfter(scheduledStart))
+            throw new IllegalArgumentException("Scheduled end must be after the scheduled start");
+
+        appointment.setScheduledStart(scheduledStart);
+        appointment.setScheduledEnd(scheduledEnd);
+
+        return appointmentRepository.save(appointment);
+    }
+
     public Appointment updateAppointmentStatus(Long id, AppointmentStatus status) {
         User currentUser = getCurrentUser();
         Appointment appointment = appointmentRepository.findById(id)
@@ -119,6 +171,11 @@ public class AppointmentService {
             appointment.setCompletedAt(LocalDateTime.now());
             appointment.getServiceRequest().setStatus(com.example.projet.enums.ServiceRequestStatus.COMPLETED);
             appointment.getServiceRequest().setCompletedAt(LocalDateTime.now());
+            serviceRequestRepository.save(appointment.getServiceRequest());
+        } else if (status == AppointmentStatus.CANCELLED) {
+            // Consistency rule: when an appointment is cancelled, the linked
+            // service request must also move to CANCELLED.
+            appointment.getServiceRequest().setStatus(com.example.projet.enums.ServiceRequestStatus.CANCELLED);
             serviceRequestRepository.save(appointment.getServiceRequest());
         }
         

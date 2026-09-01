@@ -19,7 +19,7 @@ export class ContractorLayoutComponent implements OnInit, OnDestroy {
     { label: 'Dashboard', route: '/contractor/dashboard', icon: 'dashboard' },
     { label: 'My Leads', route: '/contractor/leads', icon: 'work' },
     { label: 'Appointments', route: '/contractor/appointments', icon: 'event' },
-    { label: 'Portfolio', route: '/contractor/portfolio', icon: 'photo_library', disabled: true },
+    { label: 'Portfolio', route: '/contractor/portfolio', icon: 'photo_library', disabled: false },
     { label: 'Reviews', route: '/contractor/reviews', icon: 'star' },
   ];
 

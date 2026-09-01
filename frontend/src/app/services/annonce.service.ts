@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 export interface Annonce {
   id: number;
@@ -18,7 +19,7 @@ export interface Annonce {
   providedIn: 'root'
 })
 export class AnnonceService {
-  private apiUrl = 'http://localhost:8081/api/v1/annonce';
+  private apiUrl = environment.apiUrl + '/annonce';
 
   constructor(private http: HttpClient) { }
 

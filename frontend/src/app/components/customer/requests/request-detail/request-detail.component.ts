@@ -77,9 +77,10 @@ export class RequestDetailComponent implements OnInit, OnDestroy {
           this.notFound = false;
           this.successMessage = '';
           this.cancelError = '';
-          return this.customerData.getServiceRequest(id);
+          return this.customerData.getServiceRequest(id).pipe(
+            finalize(() => (this.isLoading = false))
+          );
         }),
-        finalize(() => (this.isLoading = false))
       )
       .subscribe({
         next: (request) => {

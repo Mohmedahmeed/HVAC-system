@@ -1,0 +1,117 @@
+<!-- ═══════════════════════════════════════════════════════════════
+     Public Contractor Profile
+     ═══════════════════════════════════════════════════════════════ -->
+
+<!-- ─── Loading State ────────────────────────────────────────── -->
+<div *ngIf="isLoading" class="ch-container ch-public-profile">
+  <div class="ch-card ch-public-profile__skeleton-header">
+    <app-skeleton variant="list"></app-skeleton>
+  </div>
+  <div class="ch-card ch-public-profile__section">
+    <app-skeleton variant="list"></app-skeleton>
+  </div>
+</div>
+
+<!-- ─── Not Found / Error States ────────────────────────────── -->
+<div *ngIf="!isLoading && notFound" class="ch-container ch-public-profile">
+  <div class="ch-card ch-public-profile__empty">
+    <app-empty-state
+      icon="person_off"
+      message="Contractor profile not found"
+    ></app-empty-state>
+  </div>
+</div>
+
+<div *ngIf="!isLoading && hasError" class="ch-container ch-public-profile">
+  <app-alert type="error" [message]="errorMessage" (dismiss)="onRetry()"></app-alert>
+  <div style="text-align: center; margin-top: var(--ch-space-6);">
+    <button mat-stroked-button color="primary" (click)="onRetry()">Try Again</button>
+  </div>
+</div>
+
+<!-- ─── Loaded State ────────────────────────────────────────── -->
+<div *ngIf="!isLoading && !hasError && !notFound && profile" class="ch-container ch-public-profile">
+
+  <!-- Header -->
+  <div class="ch-card ch-public-profile__header">
+    <div class="ch-public-profile__identity">
+      <div class="ch-public-profile__avatar" aria-hidden="true">
+        <mat-icon>business</mat-icon>
+      </div>
+      <div class="ch-public-profile__heading">
+        <div class="ch-public-profile__name-row">
+          <h1 class="ch-public-profile__name">{{ profile.businessName || 'HVAC Contractor' }}</h1>
+          <span *ngIf="profile.verified" class="ch-public-profile__verified">
+            <mat-icon>verified</mat-icon>
+            Verified
+          </span>
+        </div>
+        <div class="ch-public-profile__rating" *ngIf="profile.totalReviews > 0">
+          <app-rating-stars [value]="profile.averageRating" [readonly]="true"></app-rating-stars>
+          <span class="ch-public-profile__rating-text">
+            {{ profile.averageRating.toFixed(1) }} · {{ profile.totalReviews }} review{{ profile.totalReviews === 1 ? '' : 's' }}
+          </span>
+        </div>
+        <span class="ch-public-profile__meta" *ngIf="profile.baseRate != null">
+          <mat-icon>attach_money</mat-icon>
+          From {{ formatBaseRate(profile.baseRate) }} / job
+        </span>
+        <span class="ch-public-profile__meta" *ngIf="profile.acceptsEmergency">
+          <mat-icon>flash_on</mat-icon>
+          Accepts emergency calls
+        </span>
+      </div>
+    </div>
+    <button mat-flat-button color="primary" class="ch-public-profile__cta" (click)="onRequestService()">
+      <mat-icon>build</mat-icon>
+      Request Service
+    </button>
+  </div>
+
+  <!-- Specialties -->
+  <div class="ch-card ch-public-profile__section" *ngIf="specialtiesList.length > 0">
+    <h2 class="ch-public-profile__section-title">Specialties</h2>
+    <div class="ch-public-profile__chips">
+      <span class="ch-public-profile__chip" *ngFor="let s of specialtiesList">{{ s }}</span>
+    </div>
+  </div>
+
+  <!-- About -->
+  <div class="ch-card ch-public-profile__section" *ngIf="profile.description">
+    <h2 class="ch-public-profile__section-title">About</h2>
+    <p class="ch-public-profile__about">{{ profile.description }}</p>
+  </div>
+
+  <!-- Credentials -->
+  <div class="ch-card ch-public-profile__section" *ngIf="profile.licenseNumber">
+    <h2 class="ch-public-profile__section-title">Credentials</h2>
+    <p class="ch-public-profile__meta">
+      <mat-icon>verified_user</mat-icon>
+      Licensed · {{ profile.licenseNumber }}
+    </p>
+  </div>
+
+  <!-- Reviews -->
+  <div class="ch-card ch-public-profile__section" *ngIf="reviewsAvailable">
+    <div class="ch-public-profile__section-header">
+      <h2 class="ch-public-profile__section-title">Reviews</h2>
+    </div>
+
+    <app-empty-state
+      *ngIf="!hasReviews"
+      icon="reviews"
+      message="No reviews yet"
+    ></app-empty-state>
+
+    <div *ngIf="hasReviews" class="ch-public-profile__reviews">
+      <div *ngFor="let review of reviews" class="ch-public-profile__review">
+        <div class="ch-public-profile__review-head">
+          <strong>{{ reviewerName(review) }}</strong>
+          <span class="ch-public-profile__review-date">{{ formatDate(review.createdAt) }}</span>
+        </div>
+        <app-rating-stars [value]="review.overallRating" [readonly]="true" ariaLabel="Overall rating"></app-rating-stars>
+        <p class="ch-public-profile__review-comment" *ngIf="review.comment">{{ review.comment }}</p>
+      </div>
+    </div>
+  </div>
+</div>

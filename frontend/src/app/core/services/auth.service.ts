@@ -4,6 +4,7 @@ import { BehaviorSubject, Observable, tap, map, catchError, of } from 'rxjs';
 import { Router } from '@angular/router';
 import { AuthResponse, LoginRequest } from '../models/auth.model';
 import { User, MeResponse, UserRole } from '../models/user.model';
+import { environment } from '../../../environments/environment';
 
 const TOKEN_KEY = 'choufli_hal_token';
 const USER_KEY = 'choufli_hal_user';
@@ -12,7 +13,7 @@ const USER_KEY = 'choufli_hal_user';
   providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:8081/api/v1';
+  private apiUrl = environment.apiUrl;
 
   private currentUserSubject = new BehaviorSubject<User | null>(this.loadStoredUser());
   public currentUser$ = this.currentUserSubject.asObservable();

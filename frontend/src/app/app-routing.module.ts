@@ -11,7 +11,7 @@ import { ContractorLayoutComponent } from './core/layouts/contractor-layout/cont
 import { AdminLayoutComponent } from './core/layouts/admin-layout/admin-layout.component';
 
 import { CustomerDashboardPlaceholderComponent } from './components/placeholders/customer-dashboard-placeholder/customer-dashboard-placeholder.component';
-import { AdminDashboardPlaceholderComponent } from './components/placeholders/admin-dashboard-placeholder/admin-dashboard-placeholder.component';
+import { CustomerAppointmentsComponent } from './components/customer/appointments/customer-appointments.component';
 import { NewRequestComponent } from './components/customer/new-request/new-request.component';
 import { RequestListComponent } from './components/customer/requests/request-list/request-list.component';
 import { RequestDetailComponent } from './components/customer/requests/request-detail/request-detail.component';
@@ -24,6 +24,11 @@ import { ContractorProfileComponent } from './components/contractor/contractor-p
 import { ServiceAreasComponent } from './components/contractor/service-areas/service-areas.component';
 import { AvailabilityComponent } from './components/contractor/availability/availability.component';
 import { ContractorReviewsComponent } from './components/contractor/reviews/contractor-reviews/contractor-reviews.component';
+import { ContractorPortfolioComponent } from './components/contractor/portfolio/contractor-portfolio.component';
+
+import { AdminDashboardComponent } from './components/admin/admin-dashboard/admin-dashboard.component';
+
+import { PublicContractorProfileComponent } from './components/public/contractor-profile/public-contractor-profile.component';
 
 import { AuthGuard } from './core/guards/auth.guard';
 import { RoleGuard } from './core/guards/role.guard';
@@ -50,6 +55,7 @@ const routes: Routes = [
       { path: 'request/new', component: NewRequestComponent },
       { path: 'requests', component: RequestListComponent },
       { path: 'requests/:id', component: RequestDetailComponent },
+      { path: 'appointments', component: CustomerAppointmentsComponent },
     ],
   },
 
@@ -65,6 +71,7 @@ const routes: Routes = [
       { path: 'leads', component: LeadInboxComponent },
       { path: 'leads/:id', component: LeadDetailComponent },
       { path: 'appointments', component: AppointmentListComponent },
+      { path: 'portfolio', component: ContractorPortfolioComponent },
       { path: 'profile', component: ContractorProfileComponent },
       { path: 'service-areas', component: ServiceAreasComponent },
       { path: 'availability', component: AvailabilityComponent },
@@ -80,9 +87,16 @@ const routes: Routes = [
     data: { role: 'ADMIN' },
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-      { path: 'dashboard', component: AdminDashboardPlaceholderComponent },
+      { path: 'dashboard', component: AdminDashboardComponent },
     ],
   },
+
+  // ─── Public Contractor Profile ─────────────────────────────
+  // Declared AFTER the guarded /contractor group so that literal child
+  // routes there (/contractor/dashboard, /contractor/leads, ...) resolve to
+  // the guarded group first, while /contractor/:id falls through to this
+  // public route (no literal child matches a numeric id).
+  { path: 'contractor/:id', component: PublicContractorProfileComponent },
 
   // ─── Wildcard ─────────────────────────────────────────────
   { path: '**', redirectTo: '/' },

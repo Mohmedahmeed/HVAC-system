@@ -1,5 +1,6 @@
 package com.example.projet.controller;
 
+import com.example.projet.dto.PublicReviewResponse;
 import com.example.projet.entity.Review;
 import com.example.projet.service.ReviewService;
 import org.springframework.http.ResponseEntity;
@@ -26,9 +27,10 @@ public class ReviewController {
         return ResponseEntity.ok(reviewService.createReview(serviceRequestId, review));
     }
 
-@GetMapping("/contractor/{contractorId}")
-    @PreAuthorize("hasAnyRole('CUSTOMER', 'CONTRACTOR', 'ADMIN')")
-    public ResponseEntity<List<Review>> getContractorReviews(@PathVariable Long contractorId) {
+    @GetMapping("/contractor/{contractorId}")
+    public ResponseEntity<List<PublicReviewResponse>> getContractorReviews(@PathVariable Long contractorId) {
+        // Public, GET-only, read-only. Writes are never exposed here: the
+        // SecurityConfig matcher permits only this GET path.
         return ResponseEntity.ok(reviewService.getContractorReviews(contractorId));
     }
 

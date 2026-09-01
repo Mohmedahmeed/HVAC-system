@@ -13,6 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -46,6 +47,9 @@ public class SecurityConfig {
                 .requestMatchers(new AntPathRequestMatcher("/api/v1/auth/**")).permitAll()
                 .requestMatchers(new AntPathRequestMatcher("/api/v1/contractor-profile/**")).permitAll()
                 .requestMatchers(new AntPathRequestMatcher("/api/v1/service-areas/zip/**")).permitAll()
+                // Public reviews are strictly GET-only / read-only. The method
+                // bound keeps writes forbidden even if the path is reachable.
+                .requestMatchers(new AntPathRequestMatcher("/api/v1/reviews/contractor/**", "GET")).permitAll()
                 .requestMatchers(new AntPathRequestMatcher("/api/v1/**")).authenticated()
                 .anyRequest().authenticated()
             )

@@ -4,12 +4,13 @@ import { Observable } from 'rxjs';
 import { ServiceRequest } from '../models/service-request.model';
 import { Appointment } from '../models/appointment.model';
 import { Review, ReviewInput } from '../models/review.model';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CustomerDataService {
-  private apiUrl = 'http://localhost:8081/api/v1';
+  private apiUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) {}
 
