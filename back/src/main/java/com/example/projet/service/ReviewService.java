@@ -1,5 +1,6 @@
 package com.example.projet.service;
 
+import com.example.projet.dto.PublicReviewResponse;
 import com.example.projet.entity.Review;
 import com.example.projet.entity.ServiceRequest;
 import com.example.projet.entity.User;
@@ -7,6 +8,7 @@ import com.example.projet.enums.Role;
 import com.example.projet.enums.ServiceRequestStatus;
 import com.example.projet.exception.ResourceNotFoundException;
 import com.example.projet.exception.UnauthorizedException;
+import com.example.projet.mapper.ReviewMapper;
 import com.example.projet.repository.ReviewRepository;
 import com.example.projet.repository.ServiceRequestRepository;
 import com.example.projet.repository.UserRepository;
@@ -25,13 +27,16 @@ public class ReviewService {
     private final ReviewRepository reviewRepository;
     private final ServiceRequestRepository serviceRequestRepository;
     private final UserRepository userRepository;
+    private final ReviewMapper reviewMapper;
 
     public ReviewService(ReviewRepository reviewRepository, 
                         ServiceRequestRepository serviceRequestRepository,
-                        UserRepository userRepository) {
+                        UserRepository userRepository,
+                        ReviewMapper reviewMapper) {
         this.reviewRepository = reviewRepository;
         this.serviceRequestRepository = serviceRequestRepository;
         this.userRepository = userRepository;
+        this.reviewMapper = reviewMapper;
     }
 
     private User getCurrentUser() {
@@ -106,12 +111,13 @@ public class ReviewService {
             throw new IllegalArgumentException("Rating must be between 1 and 5");
     }
 
-    public List<Review> getContractorReviews(Long contractorId) {
-        User currentUser = getCurrentUser();
-        
-        // Anyone can view contractor reviews (public)
-        // But we still require authentication for tracking
-        return reviewRepository.findByContractorId(contractorId);
+public List<PublicReviewResponse> getContractorReviews(Long contractorId) {
+        // Public, read-only endpoint: no authentication required and only
+        // the DTO (no PII) is exposed. Security is enforced at the filter
+        // chain level via the GET-only matcher.
+        return reviewRepository.findByContractorId(contractorId).stream()
+                .map(reviewMapper::toPublicResponse)
+                .toList();
     }
 
     public List<Review> getMyReviews() {

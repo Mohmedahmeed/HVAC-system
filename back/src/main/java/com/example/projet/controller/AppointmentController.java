@@ -1,5 +1,6 @@
 package com.example.projet.controller;
 
+import com.example.projet.dto.RescheduleRequest;
 import com.example.projet.entity.Appointment;
 import com.example.projet.enums.AppointmentStatus;
 import com.example.projet.service.AppointmentService;
@@ -38,6 +39,20 @@ public class AppointmentController {
     @PreAuthorize("hasAnyRole('CUSTOMER', 'CONTRACTOR')")
     public ResponseEntity<List<Appointment>> getMyAppointments() {
         return ResponseEntity.ok(appointmentService.getMyAppointments());
+    }
+
+@PostMapping("/{id}/cancel")
+    @PreAuthorize("hasRole('CUSTOMER')")
+    public ResponseEntity<Appointment> cancelAppointment(@PathVariable Long id) {
+        return ResponseEntity.ok(appointmentService.cancelByCustomer(id));
+    }
+
+    @PutMapping("/{id}/reschedule")
+    @PreAuthorize("hasRole('CUSTOMER')")
+    public ResponseEntity<Appointment> rescheduleAppointment(
+            @PathVariable Long id,
+            @RequestBody RescheduleRequest request) {
+        return ResponseEntity.ok(appointmentService.reschedule(id, request.getScheduledStart(), request.getScheduledEnd()));
     }
 
     @PatchMapping("/{id}/status")
